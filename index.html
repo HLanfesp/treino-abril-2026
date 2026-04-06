@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Treino Abr26">
+<meta name="theme-color" content="#1a1a2e">
+<title>Treino Abril 2026</title>
+<style>
+:root{--bg:#0f0f1a;--card:#1a1a2e;--card2:#16213e;--acc:#e94560;--acc2:#0f3460;--grn:#00b894;--ylw:#fdcb6e;--blu:#74b9ff;--pur:#a29bfe;--txt:#eee;--mut:#888;--brd:#2a2a3e;--tabh:60px;--toph:56px}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'SF Pro Display',sans-serif;min-height:100vh;overflow-x:hidden}
+.topbar{position:fixed;top:0;left:0;right:0;height:var(--toph);background:var(--card);border-bottom:1px solid var(--brd);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:100;padding-top:env(safe-area-inset-top)}
+.topbar-title{font-size:17px;font-weight:700}.topbar-title span{color:var(--acc)}
+.week-selector{display:flex;gap:4px}
+.wbtn{padding:5px 10px;border-radius:8px;border:1px solid var(--brd);background:var(--card2);color:var(--mut);font-size:12px;font-weight:600;cursor:pointer;transition:all .2s}
+.wbtn.active{background:var(--acc);border-color:var(--acc);color:#fff}
+.main{padding-top:calc(var(--toph) + env(safe-area-inset-top) + 8px);padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom) + 8px)}
+.thead{margin:0 12px 12px;border-radius:16px;padding:16px}
+.tlabel{font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;opacity:.7;margin-bottom:4px}
+.ttitle{font-size:20px;font-weight:800;margin-bottom:6px}
+.tmeta{font-size:12px;opacity:.8;line-height:1.5}
+.winfo{margin:0 12px 12px;background:var(--card2);border-radius:12px;padding:12px 14px;border:1px solid var(--brd);display:flex;align-items:center;gap:10px}
+.wbadge{border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;white-space:nowrap}
+.wdesc{font-size:12px;color:var(--mut);line-height:1.4}.wdesc strong{color:var(--txt)}
+.btitle{margin:14px 12px 6px;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);border-left:3px solid var(--acc);padding-left:8px}
+.excard{margin:0 12px 8px;background:var(--card);border-radius:14px;border:1px solid var(--brd);overflow:hidden;transition:border-color .2s}
+.excard.done{border-color:var(--grn);opacity:.65}
+.exhdr{display:flex;align-items:center;padding:12px 14px;gap:12px;cursor:pointer}
+.exnum{width:28px;height:28px;border-radius:8px;background:var(--acc2);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--blu);flex-shrink:0}
+.exinfo{flex:1;min-width:0}
+.exname{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.exequip{font-size:11px;color:var(--mut);margin-top:2px}
+.exmus{font-size:11px;color:var(--pur);margin-top:1px}
+.exchev{color:var(--mut);font-size:18px;flex-shrink:0;transition:transform .2s;line-height:1}
+.excard.open .exchev{transform:rotate(180deg)}
+.srow{padding:0 14px 10px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.slabel{font-size:12px;font-weight:700;color:var(--ylw);min-width:64px}
+.sdots{display:flex;gap:6px;flex-wrap:wrap}
+.sdot{width:38px;height:38px;border-radius:50%;border:2px solid var(--brd);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;font-weight:700;color:var(--mut);transition:all .15s;flex-shrink:0;user-select:none}
+.sdot.done{background:var(--grn);border-color:var(--grn);color:#fff}
+.kgrow{padding:0 14px 10px;display:flex;align-items:center;gap:8px}
+.kglbl{font-size:12px;color:var(--mut);min-width:30px}
+.kginput{background:var(--card2);border:1px solid var(--brd);border-radius:8px;color:var(--txt);font-size:14px;font-weight:700;padding:6px 10px;width:78px;text-align:center;-webkit-appearance:none}
+.kginput:focus{outline:none;border-color:var(--acc)}
+.kgunit{font-size:12px;color:var(--mut)}
+.rpetag{margin-left:auto;background:var(--acc2);border-radius:6px;padding:4px 8px;font-size:10px;font-weight:700;color:var(--blu)}
+.cadtag{background:var(--card2);border:1px solid var(--brd);border-radius:6px;padding:4px 8px;font-size:10px;color:var(--mut)}
+.exdet{display:none}
+.excard.open .exdet{display:block}
+.exnotes{padding:0 14px 12px}
+.exnotes-t{background:var(--card2);border-radius:10px;padding:10px 12px;font-size:12px;color:var(--mut);line-height:1.6;border-left:3px solid var(--acc2)}
+.timbar{position:fixed;bottom:calc(var(--tabh) + env(safe-area-inset-bottom));left:0;right:0;background:var(--card);border-top:1px solid var(--brd);padding:10px 16px;display:none;z-index:99;align-items:center;gap:12px}
+.timbar.show{display:flex}
+.timring{position:relative;width:44px;height:44px;flex-shrink:0}
+.timsvg{transform:rotate(-90deg)}
+.timbg{fill:none;stroke:var(--brd);stroke-width:3}
+.timfg{fill:none;stroke:var(--acc);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .9s linear}
+.timtxt{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:10px;font-weight:800}
+.timinfo{flex:1}.timlbl{font-size:11px;color:var(--mut)}.timsecs{font-size:20px;font-weight:800;color:var(--acc)}
+.timstop{background:var(--card2);border:1px solid var(--brd);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;color:var(--txt)}
+.bnav{position:fixed;bottom:0;left:0;right:0;height:var(--tabh);padding-bottom:env(safe-area-inset-bottom);background:var(--card);border-top:1px solid var(--brd);display:flex;z-index:100}
+.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:background .2s}
+.nbtn.active{background:rgba(233,69,96,.08)}
+.nico{font-size:20px}.nlbl{font-size:10px;font-weight:600;color:var(--mut)}
+.nbtn.active .nlbl{color:var(--acc)}
+.pbar-wrap{margin:0 12px 8px}
+.pbar{background:var(--card2);border-radius:10px;height:6px;overflow:hidden}
+.pfill{background:linear-gradient(to right,var(--acc),var(--grn));height:100%;border-radius:10px;transition:width .3s}
+.plbl{font-size:11px;color:var(--mut);margin-top:4px;text-align:right}
+.aquec{margin:0 12px 8px;background:rgba(253,203,110,.1);border-radius:10px;padding:10px 12px;border:1px solid rgba(253,203,110,.2);font-size:12px;color:var(--ylw)}
+.dicas{margin:0 12px 16px;background:var(--card2);border-radius:14px;padding:14px;border:1px solid var(--brd)}
+.dicast{font-size:12px;font-weight:700;color:var(--ylw);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.dica{font-size:12px;color:var(--mut);line-height:1.6;padding:3px 0;display:flex;gap:6px}
+.dica::before{content:'▸';color:var(--acc);flex-shrink:0}
+.page{display:none}.page.active{display:block}
+/* HOME */
+.home{padding:12px}
+.hhdr{background:linear-gradient(135deg,#1a1a2e,#0f3460);border-radius:18px;padding:20px;margin-bottom:14px;text-align:center;border:1px solid var(--brd)}
+.hgreet{font-size:22px;font-weight:800;margin-bottom:4px}
+.hdate{font-size:13px;color:var(--mut)}
+.htoday{margin-top:12px;background:var(--acc);border-radius:12px;padding:10px 14px;font-size:14px;font-weight:700}
+.sgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.scard{background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--brd);text-align:center}
+.sval{font-size:22px;font-weight:800;color:var(--acc)}.slb{font-size:11px;color:var(--mut);margin-top:2px}
+.cal{background:var(--card);border-radius:14px;padding:14px;border:1px solid var(--brd);margin-bottom:14px}
+.calt{font-size:13px;font-weight:700;margin-bottom:10px;color:var(--acc);letter-spacing:.5px}
+.calgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;text-align:center}
+.caldh{font-size:9px;color:var(--mut);font-weight:700;padding:2px 0}
+.cald{font-size:10px;padding:4px 1px;border-radius:5px;font-weight:600;line-height:1.3}
+.cald.e{opacity:0}.cald.ta{background:rgba(233,69,96,.25);color:var(--acc)}.cald.tb{background:rgba(116,185,255,.25);color:var(--blu)}.cald.tc{background:rgba(162,155,254,.25);color:var(--pur)}.cald.td{background:rgba(0,184,148,.25);color:var(--grn)}.cald.co{background:rgba(253,203,110,.2);color:var(--ylw)}.cald.des{color:var(--mut)}.cald.hj{box-shadow:0 0 0 2px var(--acc)}
+.legrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.legi{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--mut)}
+.legdot{width:8px;height:8px;border-radius:2px}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <div class="topbar-title">💪 <span>Treino</span> ABR/26</div>
+  <div class="week-selector">
+    <button class="wbtn active" onclick="setWeek(0)">S1</button>
+    <button class="wbtn" onclick="setWeek(1)">S2</button>
+    <button class="wbtn" onclick="setWeek(2)">S3</button>
+    <button class="wbtn" onclick="setWeek(3)">DL</button>
+  </div>
+</div>
+<div class="main">
+  <!-- HOME -->
+  <div class="page active" id="page-home">
+    <div class="home">
+      <div class="hhdr">
+        <div class="hgreet" id="greet">Olá, Hiallyson!</div>
+        <div class="hdate" id="hdate"></div>
+        <div class="htoday" id="htoday">📋 Carregando...</div>
+      </div>
+      <div class="sgrid">
+        <div class="scard"><div class="sval">70 kg</div><div class="slb">Peso atual</div></div>
+        <div class="scard"><div class="sval">86 cm</div><div class="slb">Circunf. abdominal</div></div>
+        <div class="scard"><div class="sval" id="sdone">0</div><div class="slb">Séries feitas hoje</div></div>
+        <div class="scard"><div class="sval" id="sweek">S1</div><div class="slb">Semana atual</div></div>
+      </div>
+      <div class="cal">
+        <div class="calt">📅 CALENDÁRIO ABRIL 2026</div>
+        <div class="calgrid">
+          <div class="caldh">DOM</div><div class="caldh">SEG</div><div class="caldh">TER</div><div class="caldh">QUA</div><div class="caldh">QUI</div><div class="caldh">SEX</div><div class="caldh">SAB</div>
+          <div class="cald e"></div><div class="cald e"></div><div class="cald e"></div>
+          <div class="cald ta" id="c1">1<br>A</div><div class="cald tb" id="c2">2<br>B</div><div class="cald td" id="c3">3<br>D</div><div class="cald co" id="c4">4<br>🚴</div>
+          <div class="cald co" id="c5">5<br>🏃</div><div class="cald ta" id="c6">6<br>A</div><div class="cald tb" id="c7">7<br>B</div><div class="cald des" id="c8">8</div><div class="cald tc" id="c9">9<br>C</div><div class="cald td" id="c10">10<br>D</div><div class="cald co" id="c11">11<br>🚴</div>
+          <div class="cald co" id="c12">12<br>🏃</div><div class="cald ta" id="c13">13<br>A</div><div class="cald tb" id="c14">14<br>B</div><div class="cald des" id="c15">15</div><div class="cald tc" id="c16">16<br>C</div><div class="cald td" id="c17">17<br>D</div><div class="cald co" id="c18">18<br>🚴</div>
+          <div class="cald co" id="c19">19<br>🏃</div><div class="cald ta" id="c20">20<br>A</div><div class="cald tb" id="c21">21<br>B</div><div class="cald des" id="c22">22</div><div class="cald tc" id="c23">23<br>C</div><div class="cald td" id="c24">24<br>D</div><div class="cald co" id="c25">25<br>🚴</div>
+          <div class="cald co" id="c26">26<br>🏃</div><div class="cald ta" id="c27">27<br>A</div><div class="cald tb" id="c28">28<br>B</div><div class="cald des" id="c29">29</div><div class="cald tc" id="c30">30<br>C</div>
+        </div>
+        <div class="legrow">
+          <div class="legi"><div class="legdot" style="background:rgba(233,69,96,.6)"></div>Push A</div>
+          <div class="legi"><div class="legdot" style="background:rgba(116,185,255,.6)"></div>Pull B</div>
+          <div class="legi"><div class="legdot" style="background:rgba(162,155,254,.6)"></div>Inf C</div>
+          <div class="legi"><div class="legdot" style="background:rgba(0,184,148,.6)"></div>Full D</div>
+          <div class="legi"><div class="legdot" style="background:rgba(253,203,110,.6)"></div>Cardio</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- TREINO A -->
+  <div class="page" id="page-a">
+    <div class="thead" style="background:linear-gradient(135deg,#0f3460,#e94560)">
+      <div class="tlabel">Treino A · Segunda-Feira</div>
+      <div class="ttitle">Push Superior 💪</div>
+      <div class="tmeta">Peitoral · Ombro Ant/Méd · Tríceps · 55–75 min</div>
+    </div>
+    <div id="wi-a"></div><div id="pb-a"></div>
+    <div class="aquec">🔥 5 min — rotação de ombros, elástico leve, mobilidade torácica</div>
+    <div class="btitle">BLOCO 1 — PEITO PRINCIPAL</div>
+    <div id="eA1"></div><div id="eA2"></div><div id="eA3"></div>
+    <div class="btitle">BLOCO 2 — OMBROS</div>
+    <div id="eA4"></div><div id="eA5"></div><div id="eA6"></div>
+    <div class="btitle">BLOCO 3 — TRÍCEPS + FINALIZADOR</div>
+    <div id="eA7"></div><div id="eA8"></div><div id="eA9"></div>
+    <div class="dicas"><div class="dicast">⚡ Dicas</div>
+      <div class="dica">1 série de aquecimento leve (15–20 reps) antes do 1º exercício de cada bloco.</div>
+      <div class="dica">Supino sem parceiro: prefira halteres à barra. Se usar barra, regule as travas do rack.</div>
+      <div class="dica">Face Pull é OBRIGATÓRIO — compensa o supino e protege o manguito rotador.</div>
+      <div class="dica">Cadência 3-1-1-0: 3s descendo, 1s pausa no peito, 1s subindo, sem pausa no topo.</div>
+      <div class="dica">RPE 9 (S3) = você conseguiria fazer apenas mais 1 rep.</div>
+    </div>
+  </div>
+  <!-- TREINO B -->
+  <div class="page" id="page-b">
+    <div class="thead" style="background:linear-gradient(135deg,#0f3460,#0984e3)">
+      <div class="tlabel">Treino B · Terça-Feira</div>
+      <div class="ttitle">Pull Superior 🔙</div>
+      <div class="tmeta">Dorsal · Trapézio · Rombóide · Bíceps · Delt. Post. · 55–75 min</div>
+    </div>
+    <div id="wi-b"></div><div id="pb-b"></div>
+    <div class="aquec">🔥 5 min — rotação escapular, band pull-apart, mobilidade torácica</div>
+    <div class="btitle">BLOCO 1 — DORSAIS PRINCIPAL</div>
+    <div id="eB1"></div><div id="eB2"></div><div id="eB3"></div>
+    <div class="btitle">BLOCO 2 — TRAPÉZIO E OMBRO POSTERIOR</div>
+    <div id="eB4"></div><div id="eB5"></div>
+    <div class="btitle">BLOCO 3 — BÍCEPS + FINALIZADOR</div>
+    <div id="eB6"></div><div id="eB7"></div><div id="eB8"></div>
+    <div class="dicas"><div class="dicast">⚡ Dicas</div>
+      <div class="dica">Ative as escápulas ANTES de cada puxada — isso protege o manguito rotador.</div>
+      <div class="dica">Remada curvada: lombar neutra é inegociável. Reduza carga se a postura ceder.</div>
+      <div class="dica">Bíceps: cadência 3-1-1-0 (3s descendo devagar) maximiza o estímulo.</div>
+      <div class="dica">Encolhimento: pausa 2s no topo. Barra fixa: anote as reps para medir progresso.</div>
+    </div>
+  </div>
+  <!-- TREINO C -->
+  <div class="page" id="page-c">
+    <div class="thead" style="background:linear-gradient(135deg,#2d3436,#6c5ce7)">
+      <div class="tlabel">Treino C · Quinta-Feira</div>
+      <div class="ttitle">Inferior + Core 🦵</div>
+      <div class="tmeta">Quadríceps · Isquiotibiais · Glúteos · Panturrilha · Core · 55–75 min</div>
+    </div>
+    <div id="wi-c"></div><div id="pb-c"></div>
+    <div class="aquec">🔥 5 min — mobilidade quadril, ativação glúteo médio com banda elástica</div>
+    <div class="btitle">BLOCO 1 — QUADRÍCEPS DOMINANTE</div>
+    <div id="eC1"></div><div id="eC2"></div><div id="eC3"></div>
+    <div class="btitle">BLOCO 2 — POSTERIOR DE COXA E GLÚTEOS</div>
+    <div id="eC4"></div><div id="eC5"></div><div id="eC6"></div>
+    <div class="btitle">BLOCO 3 — PANTURRILHA E CORE</div>
+    <div id="eC7"></div><div id="eC8"></div><div id="eC9"></div>
+    <div class="dicas"><div class="dicast">⚡ Dicas</div>
+      <div class="dica">Agachamento: aqueça com 1 série leve de leg press antes. Use as travas do rack.</div>
+      <div class="dica">Stiff: isquiotibiais encurtados = risco de lombar. Priorize postura antes da carga.</div>
+      <div class="dica">Posterior de coxa forte = menos lesão na corrida de 10km.</div>
+      <div class="dica">Core forte previne dor lombar no ciclismo (posição aerodinâmica).</div>
+    </div>
+  </div>
+  <!-- TREINO D -->
+  <div class="page" id="page-d">
+    <div class="thead" style="background:linear-gradient(135deg,#1a3a2a,#00b894)">
+      <div class="tlabel">Treino D · Sexta-Feira</div>
+      <div class="ttitle">Full Body Compound ⚡</div>
+      <div class="tmeta">Multiarticulares · Força Funcional · Integração · 55–75 min</div>
+    </div>
+    <div id="wi-d"></div><div id="pb-d"></div>
+    <div class="aquec">🔥 5 min — elíptico leve ou mobilidade geral articular</div>
+    <div class="btitle">BLOCO 1 — MULTIARTICULARES PRINCIPAIS</div>
+    <div id="eD1"></div><div id="eD2"></div><div id="eD3"></div>
+    <div class="btitle">BLOCO 2 — COMPOSTOS DE INTEGRAÇÃO</div>
+    <div id="eD4"></div><div id="eD5"></div><div id="eD6"></div>
+    <div class="btitle">BLOCO 3 — FINALIZADOR FUNCIONAL (10 min metabólico)</div>
+    <div id="eD7"></div><div id="eD8"></div>
+    <div class="dicas"><div class="dicast">⚡ Dicas</div>
+      <div class="dica">Levantamento Terra: não execute com lombar fatigada. Substitua por Romanian Deadlift se necessário.</div>
+      <div class="dica">Supersét (bloco 2): vai de uma máquina para outra sem descanso. Reserve os equipamentos.</div>
+      <div class="dica">Farmer's walk: peso máximo que mantém postura por 20m.</div>
+      <div class="dica">Treino D é o mais denso da semana. Não pule o aquecimento.</div>
+    </div>
+  </div>
+</div>
+<!-- TIMER -->
+<div class="timbar" id="tbar">
+  <div class="timring">
+    <svg class="timsvg" width="44" height="44" viewBox="0 0 44 44">
+      <circle class="timbg" cx="22" cy="22" r="18"/>
+      <circle class="timfg" id="tfg" cx="22" cy="22" r="18" stroke-dasharray="113.1" stroke-dashoffset="0"/>
+    </svg>
+    <div class="timtxt" id="tpct"></div>
+  </div>
+  <div class="timinfo"><div class="timlbl">⏱ DESCANSO</div><div class="timsecs" id="tsecs">90s</div></div>
+  <button class="timstop" onclick="stopTimer()">Pular</button>
+</div>
+<!-- BOTTOM NAV -->
+<div class="bnav">
+  <div class="nbtn active" onclick="goPg('home',this)"><div class="nico">🏠</div><div class="nlbl">Home</div></div>
+  <div class="nbtn" onclick="goPg('a',this)"><div class="nico">💪</div><div class="nlbl">A Push</div></div>
+  <div class="nbtn" onclick="goPg('b',this)"><div class="nico">🔙</div><div class="nlbl">B Pull</div></div>
+  <div class="nbtn" onclick="goPg('c',this)"><div class="nico">🦵</div><div class="nlbl">C Inf</div></div>
+  <div class="nbtn" onclick="goPg('d',this)"><div class="nico">⚡</div><div class="nlbl">D Full</div></div>
+</div>
+<script>
+const WKS=[
+  {tag:'S1',label:'Semana 1',desc:'3 séries · 12 reps · RPE 7 · Foco em técnica',color:'#e94560'},
+  {tag:'S2',label:'Semana 2',desc:'4 séries · 10 reps · RPE 8 · Volume aumentado',color:'#0984e3'},
+  {tag:'S3',label:'Semana 3',desc:'4 séries · 8 reps · RPE 9 · Pico de intensidade',color:'#6c5ce7'},
+  {tag:'DL',label:'Deload',desc:'3 séries · 10 reps · RPE 6 · –20% carga · Recuperação',color:'#00b894'}
+];
+const TR={
+  a:{exercises:[
+    {id:'A1',n:1,nm:'Supino Reto com Barra',eq:'Barra + Banco',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Peitoral maior',nt:'Barra desce 2cm do peito. Cotovelos 45°. Pausa 1s no peito na S3.'},
+    {id:'A2',n:2,nm:'Supino Inclinado Halteres',eq:'Halteres + Banco 30°',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Peit. superior',nt:'Amplitude total. Não trave cotovelos no topo. Foco na porção clavicular.'},
+    {id:'A3',n:3,nm:'Crossover Cabo (baixo→cima)',eq:'Cabo',s:[['3×12','Reg.'],['4×10','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:7 / S3:8',cad:'2-1-2-1',mu:'Peit. (adução)',nt:'Isometria 2s na contração. Leve inclinação do tronco à frente.'},
+    {id:'A4',n:4,nm:'Desenvolvimento Halteres',eq:'Halteres + Banco c/ suporte',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'2-1-1-0',mu:'Deltóide ant/méd',nt:'Não hiperestenda a lombar. Cotovelos alinhados com ombros no início.'},
+    {id:'A5',n:5,nm:'Elevação Lateral Halteres',eq:'Halteres',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:7 / S3:8',cad:'2-0-2-0',mu:'Deltóide médio',nt:'Leve flexão do cotovelo fixo. Não ultrapasse 90°. Excêntrico lento.'},
+    {id:'A6',n:6,nm:'Face Pull Cabo',eq:'Cabo + corda',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:6 / S3:7',cad:'2-1-2-0',mu:'Delt. post./manguito',nt:'Cotovelos na altura dos ombros. Essencial para saúde do ombro.'},
+    {id:'A7',n:7,nm:'Tríceps Pulley (barra reta)',eq:'Cabo',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:7 / S3:8',cad:'2-0-1-1',mu:'Tríceps lat.',nt:'Cotovelos fixos ao lado. Extensão completa. Pausa 1s no final.'},
+    {id:'A8',n:8,nm:'Tríceps Testa Halteres',eq:'Halteres + Banco',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Tríceps longa',nt:'Cotovelos imóveis apontando para cima. Amplitude até as orelhas.'},
+    {id:'A9',n:9,nm:'Flexão com Carga (colete)',eq:'Colete / peso corporal',s:[['3×12','PC'],['4×10','PC'],['4×8','PC+'],['3×10','PC']],rpe:'S1:7 / S3:8',cad:'3-1-1-0',mu:'Peit./Tríceps',nt:'Posição de prancha rígida. Cotovelos 45°. Finalizador funcional.'}
+  ]},
+  b:{exercises:[
+    {id:'B1',n:1,nm:'Puxada Frontal (barra larga)',eq:'Polia alta',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Grande dorsal',nt:'Puxar até a clavícula. Escápulas ativas antes de puxar. Não bascule o tronco.'},
+    {id:'B2',n:2,nm:'Remada Curvada Barra',eq:'Barra',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'2-1-1-0',mu:'Dorsal/Rombóide',nt:'Tronco 45°, lombar neutra. Puxar cotovelo para trás e cima. Pausa 1s.'},
+    {id:'B3',n:3,nm:'Remada Unilateral Halter',eq:'Halter + banco',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'2-1-1-0',mu:'Dorsal/Rombóide',nt:'Cotovelo bem atrás do corpo. Não rotacione o tronco. Amplitude completa.'},
+    {id:'B4',n:4,nm:'Encolhimento Halteres',eq:'Halteres',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:7 / S3:8',cad:'1-2-1-0',mu:'Trapézio sup.',nt:'Movimento vertical puro. Não rotacione ombros. Pausa 2s no topo.'},
+    {id:'B5',n:5,nm:'Peck Deck Reverso (fly inv.)',eq:'Peck deck / halteres',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:6 / S3:8',cad:'2-1-2-1',mu:'Delt. post./Rombóide',nt:'Cotovelos levemente flexionados fixos. Apertar escápulas no final.'},
+    {id:'B6',n:6,nm:'Rosca Direta Barra EZ',eq:'Barra EZ',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Bíceps braquial',nt:'Cotovelos fixos. Não bascule. Extensão total no ponto mais baixo.'},
+    {id:'B7',n:7,nm:'Rosca Martelo Alternada',eq:'Halteres',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:8',cad:'2-1-1-0',mu:'Bíceps/Braquiorradial',nt:'Polegar para cima. Trabalha braquiorradial. Excêntrico controlado.'},
+    {id:'B8',n:8,nm:'Barra Fixa (ou assistida)',eq:'Barra fixa',s:[['3×Máx','PC'],['4×Máx','PC'],['4×Máx','PC'],['3×8','PC']],rpe:'S1:8 / S3:9',cad:'3-1-1-0',mu:'Dorsal/Bíceps',nt:'Pegada pronada larga. Ative escápulas antes de puxar. Use assistida se < 5 reps.'}
+  ]},
+  c:{exercises:[
+    {id:'C1',n:1,nm:'Agachamento Livre com Barra',eq:'Barra + Rack',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Quadríceps/Glúteo',nt:'Profundidade mín: coxa paralela ao chão. Joelhos alinhados. Lombar neutra.'},
+    {id:'C2',n:2,nm:'Leg Press 45°',eq:'Leg press',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Quadríceps/Glúteo',nt:'Pés na largura dos ombros. Não trave joelhos no topo. Amplitude total.'},
+    {id:'C3',n:3,nm:'Cadeira Extensora',eq:'Máquina',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:7 / S3:8',cad:'2-2-1-0',mu:'Quadríceps (iso)',nt:'Isometria 2s no topo. Não exceda a capacidade patelar. Foco no VMO.'},
+    {id:'C4',n:4,nm:'Stiff com Halteres',eq:'Halteres',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Isquiotibiais/Glúteo',nt:'Sentir o alongamento nos isquiotibiais. Não arredonde a lombar.'},
+    {id:'C5',n:5,nm:'Mesa Flexora',eq:'Máquina',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×12','↓20%']],rpe:'S1:7 / S3:8',cad:'2-1-3-0',mu:'Isquiotibiais (iso)',nt:'Quadril pressionado. Excêntrico de 3s. Não use impulso.'},
+    {id:'C6',n:6,nm:'Afundo Caminhando',eq:'Halteres',s:[['3×10/lado','Reg.'],['4×8/lado','↑5%'],['4×8/lado','↑5%'],['3×8/lado','↓20%']],rpe:'S1:7 / S3:8',cad:'2-1-1-0',mu:'Quad./Glúteo/Core',nt:'Joelho da frente não ultrapasse a ponta do pé. Tronco ereto.'},
+    {id:'C7',n:7,nm:'Panturrilha em Pé (máquina)',eq:'Máquina / Smith',s:[['3×20','Reg.'],['4×15','↑5%'],['4×12','↑5%'],['3×15','↓20%']],rpe:'S1:7 / S3:8',cad:'2-2-1-0',mu:'Gastrocnêmio/Sóleo',nt:'Amplitude máxima. Pausa 2s no topo. Use carga — músculo muito resistente.'},
+    {id:'C8',n:8,nm:'Prancha Abdominal (isometria)',eq:'Tapete',s:[['3×45s','—'],['4×45s','—'],['4×60s','—'],['3×45s','—']],rpe:'S1:7 / S3:8',cad:'ISO',mu:'Core (estabilidade)',nt:'Corpo rígido. Não deixe o quadril cair. Respire controlado.'},
+    {id:'C9',n:9,nm:'Roda Abdominal (ab wheel)',eq:'Roda abdominal',s:[['3×10','—'],['4×10','—'],['4×12','—'],['3×8','—']],rpe:'S1:7 / S3:9',cad:'3-0-1-0',mu:'Reto abd./Core',nt:'Extensão só até onde a lombar permanece neutra. Comece de joelhos.'}
+  ]},
+  d:{exercises:[
+    {id:'D1',n:1,nm:'Levantamento Terra',eq:'Barra',s:[['3×8','Reg.'],['4×6','↑5%'],['4×5','↑5%'],['3×6','↓20%']],rpe:'S1:7 / S3:9',cad:'1-0-1-0',mu:'Post./Glúteo/Dorsal',nt:'Barra raspando a canela. Quadril não sobe antes do ombro. Lombar arqueada.'},
+    {id:'D2',n:2,nm:'Supino Halteres (variação)',eq:'Halteres + banco',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'3-1-1-0',mu:'Peitoral/Tríceps',nt:'Maior amplitude que a barra. Cotovelos 45°. Pausa 1s no ponto mais baixo.'},
+    {id:'D3',n:3,nm:'Agachamento Goblet (halter)',eq:'Halter',s:[['3×15','Reg.'],['4×12','↑5%'],['4×10','↑5%'],['3×10','↓20%']],rpe:'S1:6 / S3:8',cad:'3-1-1-0',mu:'Quadríceps/Core',nt:'Halter no peito. Postura vertical. Excelente para profundidade do agacho.'},
+    {id:'D4',n:4,nm:'Remada Cabo + Puxada Alta (supersét)',eq:'Polia dupla',s:[['3×12+12','Reg.'],['4×10+10','↑5%'],['4×8+8','↑5%'],['3×10+10','↓20%']],rpe:'S1:7 / S3:8',cad:'2-1-1-0',mu:'Dorsal/Bíceps/Trap.',nt:'Supersét: remada seguida imediatamente de puxada. Economiza 15–20 min.'},
+    {id:'D5',n:5,nm:'Press Arnold',eq:'Halteres',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:9',cad:'2-1-1-0',mu:'Deltóide 360°',nt:'Rotação de neutro para pronado durante o press. Trabalha todos os feixes.'},
+    {id:'D6',n:6,nm:'Remada Alta Halteres',eq:'Halteres',s:[['3×12','Reg.'],['4×10','↑5%'],['4×8','↑5%'],['3×10','↓20%']],rpe:'S1:7 / S3:8',cad:'2-1-1-0',mu:'Trapézio/Deltóide',nt:'Cotovelos acima das mãos. Não suba as mãos acima da clavícula.'},
+    {id:'D7',n:7,nm:'Burpee Modificado',eq:'Peso corporal',s:[['3×10','—'],['3×12','—'],['3×15','—'],['2×8','—']],rpe:'S1:7 / S3:8',cad:'1-0-X-0',mu:'Full body',nt:'Versão sem salto se necessário. Qualidade antes de velocidade.'},
+    {id:'D8',n:8,nm:"Farmer's Walk (c/ carga)",eq:'Halteres pesados',s:[['3×20m','Max'],['4×20m','Max'],['4×30m','Max'],['3×20m','↓20%']],rpe:'S1:7 / S3:9',cad:'—',mu:'Core/Trapézio/Grip',nt:'Postura ereta, ombros para trás. Carga máxima que mantém a técnica.'}
+  ]}
+};
+let CW=0,DS={},KV={};
+const CIRC=113.1;
+let tiv=null,tleft=90,ttot=90;
+try{const s=localStorage.getItem('ta26');if(s){const d=JSON.parse(s);DS=d.DS||{};KV=d.KV||{};CW=d.CW||0;}}catch(e){}
+function sv(){try{localStorage.setItem('ta26',JSON.stringify({DS,KV,CW}));}catch(e){}}
+function numSets(ex,w){return parseInt(ex.s[w][0])||3;}
+function renderEx(ex,cid){
+  const w=CW;const[sr,kr]=ex.s[w];const ns=numSets(ex,w);const k=ex.id;
+  if(!DS[k]||DS[k].length!==ns)DS[k]=Array(ns).fill(false);
+  const ad=DS[k].every(Boolean);
+  const dots=DS[k].map((d,i)=>`<div class="sdot ${d?'done':''}" onclick="tog('${k}',${i})">${d?'✓':(i+1)}</div>`).join('');
+  const el=document.getElementById(cid);if(!el)return;
+  el.innerHTML=`<div class="excard ${ad?'done':''}" id="c-${k}">
+    <div class="exhdr" onclick="tc('${k}')">
+      <div class="exnum">${ex.n}</div>
+      <div class="exinfo">
+        <div class="exname">${ex.nm}</div>
+        <div class="exequip">${ex.eq}</div>
+        <div class="exmus">${ex.mu}</div>
+      </div>
+      <div class="exchev">⌄</div>
+    </div>
+    <div class="srow">
+      <div class="slabel">${sr}</div>
+      <div class="sdots">${dots}</div>
+    </div>
+    <div class="kgrow">
+      <div class="kglbl">Carga</div>
+      <input class="kginput" type="number" inputmode="decimal" placeholder="${kr}" value="${KV[k]||''}" onchange="sk('${k}',this.value)" onfocus="this.select()">
+      <div class="kgunit">kg</div>
+      <div class="rpetag">RPE ${ex.rpe}</div>
+      <div class="cadtag">${ex.cad}</div>
+    </div>
+    <div class="exdet"><div class="exnotes"><div class="exnotes-t">${ex.nt}</div></div></div>
+  </div>`;
+}
+function renderAll(){
+  ['a','b','c','d'].forEach(t=>{
+    TR[t].exercises.forEach(ex=>renderEx(ex,`e${ex.id}`));
+    upPB(t);upWI(t);
+  });
+  upWBtns();upHome();
+}
+function upWI(t){
+  const w=WKS[CW];const el=document.getElementById(`wi-${t}`);if(!el)return;
+  el.innerHTML=`<div class="winfo"><div class="wbadge" style="background:${w.color}">${w.tag}</div><div class="wdesc"><strong>${w.label}</strong><br>${w.desc}</div></div>`;
+}
+function upPB(t){
+  const exs=TR[t].exercises;let tot=0,dn=0;
+  exs.forEach(ex=>{const ns=numSets(ex,CW);tot+=ns;dn+=(DS[ex.id]||[]).filter(Boolean).length;});
+  const pct=tot>0?Math.round(dn/tot*100):0;
+  const el=document.getElementById(`pb-${t}`);if(!el)return;
+  el.innerHTML=`<div class="pbar-wrap"><div class="pbar"><div class="pfill" style="width:${pct}%"></div></div><div class="plbl">${dn}/${tot} séries · ${pct}%</div></div>`;
+}
+function upWBtns(){
+  document.querySelectorAll('.wbtn').forEach((b,i)=>b.classList.toggle('active',i===CW));
+  const el=document.getElementById('sweek');if(el)el.textContent=WKS[CW].tag;
+}
+function tog(k,i){
+  DS[k][i]=!DS[k][i];sv();
+  const t=k[0].toLowerCase();const ex=TR[t].exercises.find(e=>e.id===k);
+  if(ex)renderEx(ex,`e${k}`);upPB(t);
+  if(DS[k][i])startTimer();
+  let tot=0;Object.values(DS).forEach(a=>tot+=a.filter(Boolean).length);
+  const el=document.getElementById('sdone');if(el)el.textContent=tot;
+}
+function sk(k,v){KV[k]=v;sv();}
+function tc(k){document.getElementById(`c-${k}`)?.classList.toggle('open');}
+function setWeek(w){CW=w;DS={};sv();renderAll();}
+function goPg(nm,btn){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`page-${nm}`)?.classList.add('active');
+  btn.classList.add('active');window.scrollTo(0,0);
+}
+function startTimer(){
+  stopTimer();tleft=ttot;updTimer();
+  document.getElementById('tbar').classList.add('show');
+  tiv=setInterval(()=>{tleft--;updTimer();if(tleft<=0){stopTimer();try{navigator.vibrate&&navigator.vibrate([200,100,200]);}catch(e){};}},1000);
+}
+function stopTimer(){if(tiv){clearInterval(tiv);tiv=null;}document.getElementById('tbar').classList.remove('show');}
+function updTimer(){
+  const pct=tleft/ttot;const off=CIRC*(1-pct);
+  document.getElementById('tfg').style.strokeDashoffset=off;
+  document.getElementById('tsecs').textContent=tleft+'s';
+  document.getElementById('tpct').textContent=tleft>0?Math.round(pct*100)+'%':'✓';
+  document.getElementById('tfg').style.stroke=tleft>30?'#e94560':tleft>10?'#fdcb6e':'#00b894';
+}
+function upHome(){
+  const now=new Date();const h=now.getHours();
+  const gr=h<12?'Bom dia':h<18?'Boa tarde':'Boa noite';
+  const gEl=document.getElementById('greet');if(gEl)gEl.textContent=`${gr}, Hiallyson!`;
+  const ms=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const ds=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+  const dEl=document.getElementById('hdate');if(dEl)dEl.textContent=`${ds[now.getDay()]}, ${now.getDate()} de ${ms[now.getMonth()]} ${now.getFullYear()}`;
+  if(now.getMonth()===3&&now.getFullYear()===2026){const el=document.getElementById(`c${now.getDate()}`);if(el)el.classList.add('hj');}
+  const dow=now.getDay();const tm={1:'💪 Treino A — Push Superior',2:'🔙 Treino B — Pull Superior',4:'🦵 Treino C — Inferior + Core',5:'⚡ Treino D — Full Body'};
+  const cm={0:'🏃 Corrida leve',6:'🚴 Ciclismo'};
+  const tEl=document.getElementById('htoday');
+  if(tEl)tEl.textContent=tm[dow]?`Hoje: ${tm[dow]}`:cm[dow]?`Hoje: ${cm[dow]}`:'Hoje: Descanso ativo 🛋️';
+  let tot=0;Object.values(DS).forEach(a=>tot+=a.filter(Boolean).length);
+  const sEl=document.getElementById('sdone');if(sEl)sEl.textContent=tot;
+}
+renderAll();
+</script>
+</body>
+</html>
