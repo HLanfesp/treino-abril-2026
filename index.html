@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Treino">
-<title>Treino Hiallyson</title>
+<title>Treino Maio 2026 — Hiallyson</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -288,7 +288,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 <div class="screen active" id="screenHome">
   <div class="hdr">
     <div class="hdr-logo">💪 <span>Treino</span></div>
-    <div class="hdr-month" id="hdrMonth">MAI/26</div>
+    <div class="hdr-month" id="hdrMonth" id="hdrMonth">MAI/26</div>
     <div class="hdr-weeks">
       <button class="week-btn" data-w="1" onclick="setWeek(1)">S1</button>
       <button class="week-btn" data-w="2" onclick="setWeek(2)">S2</button>
@@ -409,153 +409,129 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 // WORKOUT DATA
 // ============================================================
 const WORKOUTS = {
-  push:{id:'push',name:'Push Superior',day:'Segunda-Feira',emoji:'💪',
-    muscles:'Peitoral · Ombro Ant/Méd · Tríceps',duration:'55–75 min',
+  push:{id:'push',name:'Upper A — Push',day:'Segunda-Feira',emoji:'💪',
+    muscles:'Peito · Ombro Ant/Méd · Tríceps',duration:'65–75 min',
     warmup:'5 min — rotação de ombros, elástico leve, mobilidade torácica',
     blocks:[
-      {label:'BLOCO 1 — PEITO PRINCIPAL',exercises:[
-        {id:'ps1',n:1,name:'Supino Reto com Barra',equip:'Barra + Banco',muscle:'Peitoral maior',muscleGroup:'Peito',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Barra desce 2cm do peito. Cotovelos 45°. Pausa 1s no peito na S3.'},
-        {id:'ps2',n:2,name:'Supino Inclinado Halteres',equip:'Halteres + Banco 30°',muscle:'Peit. superior',muscleGroup:'Peito',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Amplitude total. Não trave cotovelos no topo.'},
-        {id:'ps3',n:3,name:'Crossover Cabo',equip:'Cabo',muscle:'Peit. (adução)',muscleGroup:'Peito',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-2-1',
-         notes:'Isometria 2s na contração. Leve inclinação do tronco.'}
+      {label:'BLOCO 1 — PEITO',exercises:[
+        {id:'ua1',n:1,name:'Supino Reto',equip:'Barra ou Halteres',muscle:'Peitoral maior',muscleGroup:'Peito',
+         sets:{S1:'3×12',S2:'2×10',S3:'3×15',DL:'4×10'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
+         notes:'Barra: 60–80kg | Halteres: 20–26kg. S4: drop-set na última série (−20% e continua até falha). Cotovelos 45°.'},
+        {id:'ua2',n:2,name:'Crucifixo Inclinado',equip:'Halteres + Banco 30°',muscle:'Peit. superior',muscleGroup:'Peito',
+         sets:{S1:'3×12',S2:'2×12',S3:'3×15',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'3-1-2-0',
+         notes:'14–18kg halteres. Alt: Crossover cabo alto→baixo. Amplitude total, pausa 1s no alongamento.'}
       ]},
       {label:'BLOCO 2 — OMBROS',exercises:[
-        {id:'ps4',n:4,name:'Desenvolvimento Halteres',equip:'Halteres + suporte',muscle:'Deltóide ant/méd',muscleGroup:'Ombro',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'2-1-1-0',
-         notes:'Não hiperestenda a lombar. Cotovelos alinhados no início.'},
-        {id:'ps5',n:5,name:'Elevação Lateral Halteres',equip:'Halteres',muscle:'Deltóide médio',muscleGroup:'Ombro',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-0-2-0',
-         notes:'Leve flexão do cotovelo fixo. Não ultrapasse 90°.'},
-        {id:'ps6',n:6,name:'Face Pull Cabo',equip:'Cabo + corda',muscle:'Delt. post./manguito',muscleGroup:'Ombro',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:6 / S3:7',cad:'2-1-2-0',
-         notes:'Cotovelos na altura dos ombros. Essencial para saúde do ombro.'}
+        {id:'ua3',n:3,name:'Desenvolvimento Halteres',equip:'Halteres + suporte',muscle:'Deltóide ant/méd',muscleGroup:'Ombro',
+         sets:{S1:'3×12',S2:'2×10',S3:'3×12',DL:'4×10'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
+         notes:'16–22kg. Alt: Press militar barra. Não hiperestenda a lombar.'},
+        {id:'ua4',n:4,name:'Elevação Lateral',equip:'Halteres ou Cabo',muscle:'Deltóide médio',muscleGroup:'Ombro',
+         sets:{S1:'3×15',S2:'2×15',S3:'3×20',DL:'4×12'},rpe:'S1:7 / S3:8',cad:'2-0-2-0',
+         notes:'8–12kg. Alt: Elevação lateral cabo. Não ultrapasse 90°. Leve flexão do cotovelo.'}
       ]},
       {label:'BLOCO 3 — TRÍCEPS',exercises:[
-        {id:'ps7',n:7,name:'Tríceps Pulley (barra reta)',equip:'Cabo',muscle:'Tríceps lat.',muscleGroup:'Tríceps',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-0-1-1',
-         notes:'Cotovelos fixos. Extensão completa. Pausa 1s no final.'},
-        {id:'ps8',n:8,name:'Tríceps Testa Halteres',equip:'Halteres + Banco',muscle:'Tríceps longa',muscleGroup:'Tríceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Cotovelos imóveis apontando para cima. Amplitude até as orelhas.'},
-        {id:'ps9',n:9,name:'Flexão com Carga (colete)',equip:'Colete/peso corporal',muscle:'Peit./Tríceps',muscleGroup:'Peito',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
-         notes:'Posição de prancha rígida. Cotovelos 45°.',isBodyweight:true}
+        {id:'ua5',n:5,name:'Tríceps Pulley (barra reta)',equip:'Cabo',muscle:'Tríceps lateral',muscleGroup:'Tríceps',
+         sets:{S1:'3×15',S2:'2×12',S3:'3×15',DL:'4×12'},rpe:'S1:7 / S3:8',cad:'2-0-1-1',
+         notes:'25–35kg. Alt: Tríceps corda. Cotovelos fixos. Extensão completa. Pausa 1s no final.'},
+        {id:'ua6',n:6,name:'Tríceps Testa',equip:'Halteres ou Barra EZ',muscle:'Tríceps longa',muscleGroup:'Tríceps',
+         sets:{S1:'3×12',S2:'2×10',S3:'3×15',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
+         notes:'10–16kg halter / 30kg barra EZ. Alt: Mergulho no banco. Cotovelos imóveis apontando para cima.'},
+        {id:'ua7',n:7,name:'Prancha + Crunch',equip:'Tapete',muscle:'Core',muscleGroup:'Core',
+         sets:{S1:'3×45s',S2:'2×30s',S3:'3×45s',DL:'4×60s'},rpe:'S1:7 / S3:8',cad:'ISO',
+         notes:'Prancha 45s + Crunch 15 reps. S4: prancha 60s + crunch 20 reps.',isBodyweight:true}
       ]}
     ]
   },
-  pull:{id:'pull',name:'Pull Superior',day:'Terça-Feira',emoji:'🔙',
-    muscles:'Dorsal · Trapézio · Bíceps · Ombro Post.',duration:'55–75 min',
-    warmup:'5 min — rotação escapular, band pull-apart, mobilidade torácica',
-    blocks:[
-      {label:'BLOCO 1 — DORSAIS PRINCIPAL',exercises:[
-        {id:'pl1',n:1,name:'Puxada Frontal (barra larga)',equip:'Polia alta',muscle:'Grande dorsal',muscleGroup:'Dorsal',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Puxar até a clavícula. Escápulas ativas antes de puxar.'},
-        {id:'pl2',n:2,name:'Remada Curvada Barra',equip:'Barra',muscle:'Dorsal/Rombóide',muscleGroup:'Dorsal',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'2-1-1-0',
-         notes:'Tronco 45°, lombar neutra. Puxar cotovelo para trás. Pausa 1s.'},
-        {id:'pl3',n:3,name:'Remada Unilateral Halter',equip:'Halter + banco',muscle:'Dorsal/Rombóide',muscleGroup:'Dorsal',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'2-1-1-0',
-         notes:'Cotovelo bem atrás do corpo. Não rotacione o tronco.'}
-      ]},
-      {label:'BLOCO 2 — TRAPÉZIO E OMBRO POST.',exercises:[
-        {id:'pl4',n:4,name:'Encolhimento Halteres',equip:'Halteres',muscle:'Trapézio sup.',muscleGroup:'Trapézio',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'1-2-1-0',
-         notes:'Movimento vertical puro. Pausa 2s no topo.'},
-        {id:'pl5',n:5,name:'Peck Deck Reverso',equip:'Peck deck/halteres',muscle:'Delt. post./Rombóide',muscleGroup:'Ombro',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:6 / S3:8',cad:'2-1-2-1',
-         notes:'Cotovelos levemente flexionados. Apertar escápulas no final.'}
-      ]},
-      {label:'BLOCO 3 — BÍCEPS',exercises:[
-        {id:'pl6',n:6,name:'Rosca Direta Barra EZ',equip:'Barra EZ',muscle:'Bíceps braquial',muscleGroup:'Bíceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Cotovelos fixos. Não bascule. Extensão total embaixo.'},
-        {id:'pl7',n:7,name:'Rosca Martelo Alternada',equip:'Halteres',muscle:'Bíceps/Braquiorradial',muscleGroup:'Bíceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
-         notes:'Polegar para cima. Excêntrico controlado.'},
-        {id:'pl8',n:8,name:'Barra Fixa (ou assistida)',equip:'Barra fixa',muscle:'Dorsal/Bíceps',muscleGroup:'Dorsal',
-         sets:{S1:'3×Máx',S2:'4×Máx',S3:'4×Máx',DL:'3×8'},rpe:'S1:8 / S3:9',cad:'3-1-1-0',
-         notes:'Pegada pronada larga. Use assistida se < 5 reps.',isBodyweight:true}
-      ]}
-    ]
-  },
-  inf:{id:'inf',name:'Inferior + Core',day:'Quinta-Feira',emoji:'🦵',
-    muscles:'Quadríceps · Isquiotibiais · Glúteos · Core',duration:'55–75 min',
+  pull:{id:'pull',name:'Lower A — Quad',day:'Terça-Feira',emoji:'🦵',
+    muscles:'Quadríceps · Glúteo · Panturrilha',duration:'65–75 min',
     warmup:'5 min — mobilidade quadril, ativação glúteo médio com banda elástica',
     blocks:[
-      {label:'BLOCO 1 — QUADRÍCEPS DOMINANTE',exercises:[
-        {id:'in1',n:1,name:'Agachamento Livre com Barra',equip:'Barra + Rack',muscle:'Quadríceps/Glúteo',muscleGroup:'Quadríceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Profundidade mín: coxa paralela ao chão. Lombar neutra.'},
-        {id:'in2',n:2,name:'Leg Press 45°',equip:'Leg press',muscle:'Quadríceps/Glúteo',muscleGroup:'Quadríceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Pés na largura dos ombros. Não trave joelhos no topo.'},
-        {id:'in3',n:3,name:'Cadeira Extensora',equip:'Máquina',muscle:'Quadríceps (iso)',muscleGroup:'Quadríceps',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
-         notes:'Isometria 2s no topo. Foco no VMO.'}
+      {label:'BLOCO 1 — QUADRÍCEPS',exercises:[
+        {id:'la1',n:1,name:'Agachamento Livre',equip:'Barra + Rack',muscle:'Quadríceps/Glúteo',muscleGroup:'Quadríceps',
+         sets:{S1:'3×10',S2:'2×10',S3:'3×12',DL:'4×8'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'60–80kg. Alt: Agachamento hack / Leg press 45°. Profundidade mín: coxa paralela. ⚠️ Não fazer dia antes de pedal longo.'},
+        {id:'la2',n:2,name:'Leg Press 45°',equip:'Leg press',muscle:'Quadríceps/Glúteo',muscleGroup:'Quadríceps',
+         sets:{S1:'3×12',S2:'2×12',S3:'3×15',DL:'4×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'120–180kg. Alt: Agachamento goblet com kettlebell. Pés na largura dos ombros.'},
+        {id:'la3',n:3,name:'Cadeira Extensora',equip:'Máquina',muscle:'Quadríceps (iso)',muscleGroup:'Quadríceps',
+         sets:{S1:'3×15',S2:'2×12',S3:'3×20',DL:'4×12'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'40–60kg. Alt: Avanço com halteres. Isometria 2s no topo. Foco no VMO.'}
       ]},
-      {label:'BLOCO 2 — POSTERIOR E GLÚTEOS',exercises:[
-        {id:'in4',n:4,name:'Stiff com Halteres',equip:'Halteres',muscle:'Isquiotibiais/Glúteo',muscleGroup:'Posterior',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Sentir o alongamento nos isquiotibiais. Não arredonde a lombar.'},
-        {id:'in5',n:5,name:'Mesa Flexora',equip:'Máquina',muscle:'Isquiotibiais (iso)',muscleGroup:'Posterior',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-3-0',
-         notes:'Quadril pressionado. Excêntrico de 3s. Não use impulso.'},
-        {id:'in6',n:6,name:'Afundo Caminhando',equip:'Halteres',muscle:'Quad./Glúteo/Core',muscleGroup:'Glúteo',
-         sets:{S1:'3×10/l',S2:'4×8/l',S3:'4×8/l',DL:'3×8/l'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
-         notes:'Joelho da frente não ultrapasse a ponta do pé. Tronco ereto.'}
+      {label:'BLOCO 2 — GLÚTEO',exercises:[
+        {id:'la4',n:4,name:'Agachamento Búlgaro',equip:'Halteres',muscle:'Quad/Glúteo',muscleGroup:'Glúteo',
+         sets:{S1:'3×10',S2:'2×10',S3:'3×12',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
+         notes:'14–20kg halteres. Alt: Avanço reverso. Joelho não ultrapasse ponta do pé. Tronco ereto.'},
+        {id:'la5',n:5,name:'Hip Thrust (barra)',equip:'Barra + banco',muscle:'Glúteo máximo',muscleGroup:'Glúteo',
+         sets:{S1:'3×12',S2:'2×12',S3:'3×15',DL:'4×10'},rpe:'S1:7 / S3:9',cad:'1-2-1-0',
+         notes:'60–90kg. Alt: Glúteo no cabo ou elevação quadril. Pausa 2s no topo.'}
       ]},
-      {label:'BLOCO 3 — PANTURRILHA E CORE',exercises:[
-        {id:'in7',n:7,name:'Panturrilha em Pé (máquina)',equip:'Máquina / Smith',muscle:'Gastrocnêmio/Sóleo',muscleGroup:'Panturrilha',
-         sets:{S1:'3×20',S2:'4×15',S3:'4×12',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
-         notes:'Amplitude máxima. Pausa 2s no topo.'},
-        {id:'in8',n:8,name:'Prancha Abdominal',equip:'Tapete',muscle:'Core (estabilidade)',muscleGroup:'Core',
-         sets:{S1:'3×45s',S2:'4×45s',S3:'4×60s',DL:'3×45s'},rpe:'S1:7 / S3:8',cad:'ISO',
-         notes:'Corpo rígido. Não deixe o quadril cair.',isBodyweight:true},
-        {id:'in9',n:9,name:'Roda Abdominal (ab wheel)',equip:'Roda abdominal',muscle:'Reto abd./Core',muscleGroup:'Core',
-         sets:{S1:'3×10',S2:'4×10',S3:'4×12',DL:'3×8'},rpe:'S1:7 / S3:9',cad:'3-0-1-0',
-         notes:'Extensão só até onde a lombar permanece neutra.',isBodyweight:true}
+      {label:'BLOCO 3 — PANTURRILHA',exercises:[
+        {id:'la6',n:6,name:'Panturrilha em Pé',equip:'Máquina ou Smith',muscle:'Gastrocnêmio/Sóleo',muscleGroup:'Panturrilha',
+         sets:{S1:'4×20',S2:'3×15',S3:'4×20',DL:'5×15'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'BW +20–40kg. Amplitude máxima. Pausa 2s no topo. S4: RIR 1.',isBodyweight:false}
       ]}
     ]
   },
-  full:{id:'full',name:'Full Body Compound',day:'Sexta-Feira',emoji:'⚡',
-    muscles:'Multiarticulares · Força Funcional · Integração',duration:'55–75 min',
-    warmup:'5 min — elíptico leve ou mobilidade geral articular',
+  inf:{id:'inf',name:'Upper B — Pull',day:'Quinta-Feira',emoji:'🔙',
+    muscles:'Dorsal · Trapézio · Bíceps · Ombro Post.',duration:'70–80 min',
+    warmup:'5 min — rotação escapular, band pull-apart, mobilidade torácica',
     blocks:[
-      {label:'BLOCO 1 — MULTIARTICULARES PRINCIPAIS',exercises:[
-        {id:'fb1',n:1,name:'Levantamento Terra',equip:'Barra',muscle:'Post./Glúteo/Dorsal',muscleGroup:'Posterior',
-         sets:{S1:'3×8',S2:'4×6',S3:'4×5',DL:'3×6'},rpe:'S1:7 / S3:9',cad:'1-0-1-0',
-         notes:'Barra raspando a canela. Quadril não sobe antes do ombro.'},
-        {id:'fb2',n:2,name:'Supino Halteres (variação)',equip:'Halteres + banco',muscle:'Peitoral/Tríceps',muscleGroup:'Peito',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
-         notes:'Maior amplitude que a barra. Pausa 1s no ponto mais baixo.'},
-        {id:'fb3',n:3,name:'Agachamento Goblet (halter)',equip:'Halter',muscle:'Quadríceps/Core',muscleGroup:'Quadríceps',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×10'},rpe:'S1:6 / S3:8',cad:'3-1-1-0',
-         notes:'Halter no peito. Postura vertical.'}
+      {label:'BLOCO 1 — DORSAIS',exercises:[
+        {id:'ub1',n:1,name:'Barra Fixa (pronada)',equip:'Barra fixa',muscle:'Grande dorsal',muscleGroup:'Dorsal',
+         sets:{S1:'3×8',S2:'2×6',S3:'3×10',DL:'4×8'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'BW ou lastro +5kg. Alt: Puxada na polia alta. Puxar até a clavícula. Escápulas ativas.',isBodyweight:true},
+        {id:'ub2',n:2,name:'Remada Curvada (barra)',equip:'Barra',muscle:'Dorsal/Rombóide',muscleGroup:'Dorsal',
+         sets:{S1:'3×12',S2:'2×10',S3:'3×12',DL:'4×10'},rpe:'S1:7 / S3:9',cad:'2-1-1-0',
+         notes:'60–80kg. Alt: Remada cavalinho / remada T. Tronco 45°, lombar neutra. Pausa 1s.'},
+        {id:'ub3',n:3,name:'Puxada Supinada (polia)',equip:'Polia alta',muscle:'Dorsal/Bíceps',muscleGroup:'Dorsal',
+         sets:{S1:'3×12',S2:'2×12',S3:'3×15',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
+         notes:'50–70kg. Alt: Puxada unilateral cabo. Puxar até o peito, cotovelos para baixo.'}
       ]},
-      {label:'BLOCO 2 — COMPOSTOS DE INTEGRAÇÃO',exercises:[
-        {id:'fb4',n:4,name:'Remada Cabo + Puxada Alta (supersét)',equip:'Polia dupla',muscle:'Dorsal/Bíceps/Trap.',muscleGroup:'Dorsal',
-         sets:{S1:'3×12+12',S2:'4×10+10',S3:'4×8+8',DL:'3×10+10'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
-         notes:'Supersét: remada seguida de puxada sem descanso.',isSuperset:true},
-        {id:'fb5',n:5,name:'Press Arnold',equip:'Halteres',muscle:'Deltóide 360°',muscleGroup:'Ombro',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'2-1-1-0',
-         notes:'Rotação de neutro para pronado durante o press.'},
-        {id:'fb6',n:6,name:'Remada Alta Halteres',equip:'Halteres',muscle:'Trapézio/Deltóide',muscleGroup:'Trapézio',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
-         notes:'Cotovelos acima das mãos. Não suba acima da clavícula.'}
+      {label:'BLOCO 2 — TRAPÉZIO E OMBRO POST.',exercises:[
+        {id:'ub4',n:4,name:'Crucifixo Inverso (halteres)',equip:'Halteres',muscle:'Delt. post./Rombóide',muscleGroup:'Ombro',
+         sets:{S1:'3×15',S2:'2×15',S3:'3×20',DL:'4×15'},rpe:'S1:6 / S3:8',cad:'2-1-2-1',
+         notes:'10–14kg. Alt: Face pull cabo. Cotovelos levemente flexionados. Apertar escápulas no final.'},
+        {id:'ub5',n:5,name:'Encolhimento + Hiperextensão',equip:'Halteres + banco romano',muscle:'Trapézio/Lombar',muscleGroup:'Trapézio',
+         sets:{S1:'3×15',S2:'2×15',S3:'3×15',DL:'4×12'},rpe:'S1:7 / S3:8',cad:'1-2-1-0',
+         notes:'20–30kg halteres. Encolhimento: pausa 2s no topo. Hiperextensão: amplitude controlada.'}
       ]},
-      {label:'BLOCO 3 — FINALIZADOR FUNCIONAL',exercises:[
-        {id:'fb7',n:7,name:'Burpee Modificado',equip:'Peso corporal',muscle:'Full body',muscleGroup:'Full Body',
-         sets:{S1:'3×10',S2:'3×12',S3:'3×15',DL:'2×8'},rpe:'S1:7 / S3:8',cad:'1-0-X-0',
-         notes:'Versão sem salto se necessário.',isBodyweight:true},
-        {id:'fb8',n:8,name:"Farmer's Walk",equip:'Halteres pesados',muscle:'Core/Trapézio/Grip',muscleGroup:'Core',
-         sets:{S1:'3×20m',S2:'4×20m',S3:'4×30m',DL:'3×20m'},rpe:'S1:7 / S3:9',cad:'—',
-         notes:'Postura ereta, ombros para trás. Carga máxima com técnica.'}
+      {label:'BLOCO 3 — BÍCEPS',exercises:[
+        {id:'ub6',n:6,name:'Rosca Direta (barra EZ)',equip:'Barra EZ',muscle:'Bíceps braquial',muscleGroup:'Bíceps',
+         sets:{S1:'3×12',S2:'2×12',S3:'3×15',DL:'4×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'30–40kg. Alt: Rosca martelo. Cotovelos fixos. Não bascule. Extensão total embaixo.'},
+        {id:'ub7',n:7,name:'Rosca Scott (barra EZ)',equip:'Banco Scott',muscle:'Bíceps (pico)',muscleGroup:'Bíceps',
+         sets:{S1:'3×12',S2:'2×12',S3:'3×15',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
+         notes:'20–30kg. Alt: Rosca concentrada. Amplitude total — estender completamente embaixo.'}
+      ]}
+    ]
+  },
+  full:{id:'full',name:'Lower B — Posterior',day:'Sexta-Feira',emoji:'🏋️',
+    muscles:'Isquiotibiais · Glúteo · Lombar · Panturrilha',duration:'60–70 min',
+    warmup:'5 min — mobilidade quadril, ativação isquiotibial com banda',
+    blocks:[
+      {label:'BLOCO 1 — POSTERIOR DOMINANTE',exercises:[
+        {id:'lb1',n:1,name:'Terra Stiff (barra)',equip:'Barra',muscle:'Isquiotibiais/Glúteo',muscleGroup:'Posterior',
+         sets:{S1:'3×10',S2:'2×8',S3:'3×12',DL:'4×8'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'60–90kg. Alt: Terra romeno com halteres. ⚠️ Após noite <5h: substituir por Stiff halteres ou cadeira flexora. Lombar neutra obrigatória.'},
+        {id:'lb2',n:2,name:'Leg Curl Deitado',equip:'Máquina',muscle:'Isquiotibiais (iso)',muscleGroup:'Posterior',
+         sets:{S1:'3×15',S2:'2×12',S3:'3×15',DL:'4×12'},rpe:'S1:7 / S3:8',cad:'2-1-3-0',
+         notes:'35–50kg. Alt: Leg curl em pé unilateral. Quadril pressionado. Excêntrico de 3s. Sem impulso.'},
+        {id:'lb3',n:3,name:'Leg Press (pés altos)',equip:'Leg press',muscle:'Isquiotibiais/Glúteo',muscleGroup:'Posterior',
+         sets:{S1:'3×12',S2:'2×10',S3:'3×15',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
+         notes:'130–160kg. Alt: Avanço com torso inclinado. Pés altos e afastados para ênfase posterior.'}
+      ]},
+      {label:'BLOCO 2 — GLÚTEO E LOMBAR',exercises:[
+        {id:'lb4',n:4,name:'Abdução de Quadril',equip:'Máquina ou cabo',muscle:'Glúteo médio',muscleGroup:'Glúteo',
+         sets:{S1:'3×20',S2:'2×15',S3:'3×25',DL:'4×20'},rpe:'S1:6 / S3:7',cad:'2-1-2-0',
+         notes:'20–35kg. Movimento controlado. Não use impulso do tronco. Foco no glúteo médio.'},
+        {id:'lb5',n:5,name:'Hiperextensão Lombar',equip:'Banco romano',muscle:'Lombar/Glúteo',muscleGroup:'Posterior',
+         sets:{S1:'3×15',S2:'2×15',S3:'3×20',DL:'4×15'},rpe:'S1:6 / S3:7',cad:'2-1-1-0',
+         notes:'BW / +10kg. Alt: Good morning barra leve. Amplitude controlada. Não hiperestenda no topo.',isBodyweight:true}
+      ]},
+      {label:'BLOCO 3 — PANTURRILHA',exercises:[
+        {id:'lb6',n:6,name:'Panturrilha Sentado',equip:'Máquina sentado',muscle:'Sóleo (profundo)',muscleGroup:'Panturrilha',
+         sets:{S1:'4×20',S2:'3×15',S3:'4×25',DL:'5×15'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'40–60kg. Amplitude máxima. Pausa 2s no topo. S4: RIR 1. Sóleo diferente da panturrilha em pé.',isBodyweight:false}
       ]}
     ]
   }
@@ -563,13 +539,12 @@ const WORKOUTS = {
 
 const SCHEDULE = {1:'push',2:'pull',4:'inf',5:'full'};
 const WEEK_CONFIG = {
-  S1:{label:'Semana 1',sub:'Adaptação · 3×12 · RPE 7–8'},
-  S2:{label:'Semana 2',sub:'Volume · 4×10 · RPE 8'},
-  S3:{label:'Semana 3',sub:'Intensidade · 4×8 · RPE 9'},
-  DL:{label:'Deload',sub:'3×10 · RPE 6–7 · –20%'}
+  S1:{label:'Semana 1',sub:'Adaptação · 3×12 · RIR 3'},
+  S2:{label:'Semana 2 — Taper',sub:'Volume reduzido · 2×10 · RIR 4'},
+  S3:{label:'Semana 3 — Recovery',sub:'3×12–15 · RIR 4 · Pós-prova'},
+  DL:{label:'Semana 4 — Força',sub:'4×8–10 · RIR 1–2 · Sobrecarga'}
 };
-// Progressão de carga entre semanas
-const WEEK_PROGRESS = {S1:{S2:1.05,S3:1.10,DL:0.88}, S2:{S3:1.05,DL:0.84}, S3:{DL:0.80}};
+const WEEK_PROGRESS = {S1:{S2:1.0,S3:1.0,DL:1.10}, S2:{S3:1.0,DL:1.10}, S3:{DL:1.05}};
 
 // ============================================================
 // STATE
@@ -600,10 +575,16 @@ function playBeep(freq=880, dur=0.15, vol=0.4) {
   } catch(e){}
 }
 function playAlertBeeps() {
-  // 5 bips crescentes nos últimos 5s
-  for(let i=0;i<5;i++) {
-    setTimeout(()=>playBeep(600+i*100, 0.12, 0.5), i*200);
-  }
+  // Garantir que AudioContext está ativo antes dos bips (crítico no iOS)
+  try {
+    const ctx = getAudio();
+    if(ctx.state === 'suspended') ctx.resume().then(()=>{
+      for(let i=0;i<5;i++) setTimeout(()=>playBeep(600+i*100, 0.15, 0.6), i*220);
+    });
+    else {
+      for(let i=0;i<5;i++) setTimeout(()=>playBeep(600+i*100, 0.15, 0.6), i*220);
+    }
+  } catch(e) {}
 }
 
 // ============================================================
@@ -629,24 +610,58 @@ window.addEventListener('load', ()=>{
   updateRestSettings();
 });
 
-// Retomar timer se estava rodando (bug fix: sair e voltar da tela)
-document.addEventListener('visibilitychange', ()=>{
-  if(document.visibilityState==='visible' && state.restStartedAt && !state.restTimer) {
-    const elapsed = Math.floor((Date.now() - state.restStartedAt)/1000);
-    state.restRemaining = Math.max(0, state.restDuration - elapsed);
-    if(state.restRemaining > 0) {
+// ============================================================
+// TIMER PERSISTENCE — salva no localStorage, sobrevive ao iOS minimizar
+// ============================================================
+function saveTimerState() {
+  if(state.restStartedAt) {
+    localStorage.setItem('_restTimer', JSON.stringify({
+      startedAt: state.restStartedAt,
+      duration: state.restDuration,
+      nextInfo: document.getElementById('restNextInfo')?.innerHTML || ''
+    }));
+  } else {
+    localStorage.removeItem('_restTimer');
+  }
+}
+
+function restoreTimerState() {
+  const raw = localStorage.getItem('_restTimer');
+  if(!raw) return;
+  try {
+    const saved = JSON.parse(raw);
+    const elapsed = Math.floor((Date.now() - saved.startedAt) / 1000);
+    const remaining = Math.max(0, saved.duration - elapsed);
+    if(remaining > 0) {
+      state.restStartedAt = saved.startedAt;
+      state.restDuration = saved.duration;
+      state.restRemaining = remaining;
+      const el = document.getElementById('restNextInfo');
+      if(el) el.innerHTML = saved.nextInfo || '';
       document.getElementById('restOverlay').classList.add('active');
       updateRestDisplay();
+      clearInterval(state.restTimer);
       state.restTimer = setInterval(()=>{
         state.restRemaining--;
         updateRestDisplay();
-        if(state.restRemaining<=0) skipRest();
-        if(state.restRemaining===5) playAlertBeeps();
-      },1000);
+        if(state.restRemaining === 5) playAlertBeeps();
+        if(state.restRemaining <= 0) skipRest();
+      }, 1000);
     } else {
-      skipRest();
+      localStorage.removeItem('_restTimer');
     }
-  }
+  } catch(e) { localStorage.removeItem('_restTimer'); }
+}
+
+function handleAppResume() {
+  if(state.restTimer) return;
+  restoreTimerState();
+}
+document.addEventListener('visibilitychange', ()=>{
+  if(document.visibilityState === 'visible') handleAppResume();
+});
+window.addEventListener('pageshow', (e)=>{
+  if(e.persisted) handleAppResume();
 });
 
 // ============================================================
@@ -907,14 +922,18 @@ function checkFinish(type, wk) {
 // REST TIMER — V2: bug fix saída de tela + bip sonoro
 // ============================================================
 function startRest(nextInfo='') {
-  // Inicializar AudioContext na interação do usuário
-  try { getAudio(); } catch(e){}
+  // Inicializar e RESUMIR AudioContext — obrigatório no iOS após interação do usuário
+  try {
+    const ctx = getAudio();
+    if(ctx.state === 'suspended') ctx.resume();
+  } catch(e){}
   document.getElementById('restNextInfo').innerHTML=nextInfo;
   state.restRemaining=state.restDuration;
   state.restStartedAt=Date.now();
   document.getElementById('restOverlay').classList.add('active');
   updateRestDisplay();
   clearInterval(state.restTimer);
+  saveTimerState(); // persiste no localStorage imediatamente
   state.restTimer=setInterval(()=>{
     state.restRemaining--;
     updateRestDisplay();
@@ -938,7 +957,10 @@ function skipRest() {
   clearInterval(state.restTimer);
   state.restTimer=null;
   state.restStartedAt=null;
+  localStorage.removeItem('_restTimer'); // limpar persistência ao finalizar
   document.getElementById('restOverlay').classList.remove('active');
+  // Tocar bip de conclusão
+  try { playBeep(880, 0.2, 0.5); setTimeout(()=>playBeep(1100, 0.3, 0.6), 150); } catch(e){}
 }
 
 // ============================================================
