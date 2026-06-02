@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="TreinoApp">
-<title>TreinoApp · Maio–Jun 2026 · Hipertrofia</title>
+<meta name="apple-mobile-web-app-title" content="Treino Jun/26">
+<title>Treino Jun/26 — Hiallyson</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg:#0d0f14;--bg2:#13161e;--bg3:#1a1e28;--bg4:#212638;
   --orange:#f07c2a;--orange2:#e8581a;--amber:#f0a82a;--red:#e8394a;
-  --green:#2adb6f;--blue:#3a7bd5;--purple:#9b4be8;
+  --green:#2adb6f;--blue:#3a7bd5;--purple:#9b4be8;--cyan:#2ad5d5;
   --text:#eef0f6;--text2:#9aa0b8;--text3:#5c6282;
   --border:#252a3a;--border2:#2e3448;
   --safe-top:env(safe-area-inset-top,0px);--safe-bot:env(safe-area-inset-bottom,0px);
@@ -68,10 +68,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .cal-day.pull .day-type{color:var(--blue);}
 .cal-day.inf{border-color:#9b4be844;background:linear-gradient(135deg,#9b4be818,transparent);}
 .cal-day.inf .day-type{color:var(--purple);}
-.cal-day.full{border-color:#2adb6f44;background:linear-gradient(135deg,#2adb6f18,transparent);}
-.cal-day.full .day-type{color:var(--green);}
+.cal-day.upperc{border-color:#2ad5d544;background:linear-gradient(135deg,#2ad5d518,transparent);}
+.cal-day.upperc .day-type{color:var(--cyan);}
 .cal-day.cardio{border-color:#f0a82a44;background:linear-gradient(135deg,#f0a82a18,transparent);}
 .cal-day.cardio .day-type{color:var(--amber);}
+.cal-day.run{border-color:#2adb6f44;background:linear-gradient(135deg,#2adb6f18,transparent);}
+.cal-day.run .day-type{color:var(--green);}
 .cal-day.rest-day{opacity:.4;}
 .cal-day.today{box-shadow:0 0 0 2px var(--orange);}
 .cal-day.done::after{content:'✓';position:absolute;bottom:2px;right:3px;font-size:8px;color:var(--green);}
@@ -80,13 +82,24 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text2);}
 .leg-dot{width:8px;height:8px;border-radius:50%;}
 
+/* BIOIMPEDANCIA CARD */
+.bio-card{margin:0 16px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:14px;}
+.bio-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:var(--orange);margin-bottom:10px;}
+.bio-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.bio-item{background:var(--bg3);border-radius:10px;padding:10px 12px;}
+.bio-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:800;}
+.bio-lbl{font-size:10px;color:var(--text2);margin-top:2px;}
+.bio-delta{font-size:10px;font-weight:700;margin-top:2px;}
+.delta-up{color:var(--green);}
+.delta-down{color:var(--red);}
+
 /* WORKOUT */
 .workout-hero{margin:12px;border-radius:14px;padding:16px 18px;position:relative;overflow:hidden;}
 .workout-hero::before{content:'';position:absolute;inset:0;opacity:.15;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(255,255,255,.05) 8px,rgba(255,255,255,.05) 9px);}
 .workout-hero.push{background:linear-gradient(135deg,#e8394a,#b02030);}
 .workout-hero.pull{background:linear-gradient(135deg,#3a7bd5,#1a4a8a);}
 .workout-hero.inf{background:linear-gradient(135deg,#9b4be8,#5a1a9a);}
-.workout-hero.full{background:linear-gradient(135deg,#2adb6f,#0a7a3a);}
+.workout-hero.upperc{background:linear-gradient(135deg,#2ad5d5,#0a7a7a);}
 .workout-hero-day{font-size:11px;font-weight:700;letter-spacing:1.5px;opacity:.85;}
 .workout-hero-title{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:800;line-height:1.1;margin-top:2px;}
 .workout-hero-meta{font-size:12px;opacity:.8;margin-top:6px;}
@@ -109,7 +122,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .ex-num.push-col{background:#e8394a30;color:var(--red);}
 .ex-num.pull-col{background:#3a7bd530;color:var(--blue);}
 .ex-num.inf-col{background:#9b4be830;color:var(--purple);}
-.ex-num.full-col{background:#2adb6f30;color:var(--green);}
+.ex-num.upperc-col{background:#2ad5d530;color:var(--cyan);}
 .ex-name{font-weight:600;font-size:14px;flex:1;}
 .ex-muscle{font-size:11px;color:var(--orange);margin-top:2px;}
 .ex-equip{font-size:11px;color:var(--text3);margin-top:1px;}
@@ -125,8 +138,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .ex-param.sets{color:var(--orange);}
 .ex-param.rpe{background:var(--bg4);color:#a0e0ff;}
 .ex-param.cad{background:var(--bg4);color:#d0c0ff;}
+.ex-param.tip{background:#f0a82a18;color:var(--amber);border:1px solid #f0a82a30;}
 
-/* SERIES ROW — V2: carga por série individual */
+/* SERIES ROW */
 .series-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .series-label{font-size:11px;font-weight:700;color:var(--text2);width:24px;flex-shrink:0;}
 .series-check{width:32px;height:32px;border-radius:8px;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s;flex-shrink:0;font-size:14px;}
@@ -138,11 +152,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .reps-display{background:var(--bg4);border-radius:6px;padding:4px 8px;font-size:12px;font-weight:600;color:var(--text2);margin-left:auto;}
 .superset-badge{display:inline-block;background:#f0a82a20;border:1px solid #f0a82a50;color:var(--amber);font-size:10px;font-weight:700;letter-spacing:.5px;border-radius:4px;padding:2px 6px;margin-bottom:8px;}
 .notes-text{font-size:11px;color:var(--text2);background:var(--bg3);border-radius:8px;padding:8px 10px;line-height:1.5;margin-top:8px;}
-
-/* SUGESTÃO DE CARGA banner */
 .kg-suggest-banner{margin:0 0 10px;background:#f0a82a15;border:1px solid #f0a82a40;border-radius:8px;padding:8px 10px;font-size:11px;color:var(--amber);display:flex;align-items:center;gap:6px;}
 
-/* REST TIMER OVERLAY */
+/* REST TIMER */
 .rest-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
 .rest-overlay.active{display:flex;}
 .rest-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:600;letter-spacing:2px;color:var(--text2);}
@@ -156,14 +168,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .rest-next{font-size:13px;color:var(--text2);text-align:center;max-width:240px;line-height:1.4;}
 .rest-next strong{color:var(--text);}
 .rest-btn{background:var(--orange);border:none;border-radius:50px;color:#fff;font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;letter-spacing:.5px;padding:14px 32px;cursor:pointer;}
-.rest-btn:active{transform:scale(.96);}
 .rest-skip{background:transparent;border:1px solid var(--border2);border-radius:50px;color:var(--text2);font-size:13px;padding:10px 24px;cursor:pointer;}
 
 /* FINISH */
 .finish-btn{display:none;margin:16px 12px;background:var(--green);border:none;border-radius:12px;color:#000;font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:800;letter-spacing:.5px;padding:16px;cursor:pointer;width:calc(100% - 24px);}
 .finish-btn.visible{display:block;}
 
-/* DASHBOARD SCREEN */
+/* DASHBOARD */
 .dash-section{margin:0 16px 20px;}
 .dash-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;letter-spacing:1px;color:var(--orange);margin-bottom:12px;}
 .ex-selector{width:100%;background:var(--bg3);border:1px solid var(--border2);border-radius:10px;color:var(--text);font-family:'Barlow',sans-serif;font-size:13px;padding:10px 12px;margin-bottom:12px;-webkit-appearance:none;}
@@ -172,7 +183,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .chart-title{font-size:12px;font-weight:600;color:var(--text2);margin-bottom:12px;}
 .bar-chart{display:flex;align-items:flex-end;gap:6px;height:120px;}
 .bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:0;}
-.bar-fill{width:100%;border-radius:4px 4px 0 0;background:var(--orange);transition:height .4s;min-height:2px;position:relative;}
+.bar-fill{width:100%;border-radius:4px 4px 0 0;background:var(--orange);transition:height .4s;min-height:2px;}
 .bar-fill.s1{background:#3a7bd5;}
 .bar-fill.s2{background:var(--orange);}
 .bar-fill.s3{background:var(--red);}
@@ -183,7 +194,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .chart-leg-item{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--text2);}
 .chart-leg-dot{width:8px;height:8px;border-radius:2px;}
 
-/* COMPARATIVO SEMANAL */
+/* COMP TABLE */
 .comp-table{width:100%;border-collapse:collapse;}
 .comp-table th{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:.5px;padding:6px 8px;text-align:left;border-bottom:1px solid var(--border);}
 .comp-table td{font-size:12px;padding:8px 8px;border-bottom:1px solid var(--border);}
@@ -193,7 +204,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .comp-table .down{color:var(--red);}
 .comp-table .same{color:var(--text2);}
 
-/* VOLUME por músculo */
+/* MUSCLE VOLUME */
 .muscle-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
 .muscle-name{font-size:12px;font-weight:600;width:120px;flex-shrink:0;}
 .muscle-bar-bg{flex:1;background:var(--bg3);border-radius:4px;height:8px;overflow:hidden;}
@@ -202,14 +213,13 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 
 /* HISTORY */
 .hist-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 32px;gap:12px;color:var(--text3);}
-.hist-empty .hi{font-size:48px;}
 .hist-month-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;color:var(--text3);padding:16px 16px 8px;}
 .hist-entry{margin:0 12px 8px;background:var(--bg2);border-radius:12px;border:1px solid var(--border);padding:12px 14px;display:flex;align-items:center;gap:12px;cursor:pointer;}
 .hist-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;}
 .hist-icon.push{background:#e8394a20;}
 .hist-icon.pull{background:#3a7bd520;}
 .hist-icon.inf{background:#9b4be820;}
-.hist-icon.full{background:#2adb6f20;}
+.hist-icon.upperc{background:#2ad5d520;}
 .hist-info{flex:1;}
 .hist-name{font-weight:600;font-size:14px;}
 .hist-meta{font-size:11px;color:var(--text2);margin-top:2px;}
@@ -223,11 +233,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 .modal-entry-row:last-child{border:none;}
 .modal-close{width:100%;background:var(--bg3);border:none;border-radius:10px;color:var(--text2);font-size:14px;font-weight:600;padding:12px;margin-top:12px;cursor:pointer;}
 
-/* SKIP OPTIONS */
-.skip-options{display:flex;flex-direction:column;gap:8px;margin-top:8px;}
-.skip-option{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:12px 14px;cursor:pointer;font-size:13px;font-weight:500;}
-.skip-option.danger{border-color:#e8394a40;color:var(--red);}
-
 /* SETTINGS */
 .settings-section{margin:0 16px 20px;}
 .settings-row{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;cursor:pointer;}
@@ -240,15 +245,18 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 /* TOAST */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:10px 18px;font-size:13px;font-weight:500;pointer-events:none;opacity:0;transition:all .3s;z-index:300;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* TECNICA AVANCADA badge */
+.adv-badge{display:inline-block;background:#9b4be820;border:1px solid #9b4be850;color:var(--purple);font-size:10px;font-weight:700;letter-spacing:.5px;border-radius:4px;padding:2px 6px;margin-bottom:8px;margin-left:4px;}
 </style>
 </head>
 <body>
 
 <!-- REST TIMER OVERLAY -->
 <div class="rest-overlay" id="restOverlay">
-  <div class="rest-title">DESCANSO</div>
+  <div class="rest-title">⏱ DESCANSO</div>
   <div class="rest-circle">
-    <svg viewBox="0 0 180 180" width="180" height="180">
+    <svg viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg">
       <circle cx="90" cy="90" r="82"/>
       <circle class="progress" id="restProgress" cx="90" cy="90" r="82" stroke-dasharray="515" stroke-dashoffset="0"/>
     </svg>
@@ -258,25 +266,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
     </div>
   </div>
   <div class="rest-next" id="restNextInfo"></div>
-  <button class="rest-btn" onclick="skipRest()">▶ PRÓXIMA SÉRIE</button>
-  <button class="rest-skip" onclick="skipRest()">Pular descanso</button>
+  <button class="rest-btn" onclick="skipRest()">PULAR DESCANSO</button>
+  <button class="rest-skip" onclick="skipRest()">Cancelar</button>
 </div>
 
-<!-- MODAL SKIP -->
-<div class="modal-bg" id="skipModal">
-  <div class="modal">
-    <div class="modal-title">Registrar dia</div>
-    <div class="skip-options">
-      <div class="skip-option" onclick="markDaySkipped('rest')">😴 Descanso planejado</div>
-      <div class="skip-option" onclick="markDaySkipped('sick')">🤒 Doença / indisposição</div>
-      <div class="skip-option" onclick="markDaySkipped('travel')">✈️ Viagem / compromisso</div>
-      <div class="skip-option" onclick="markDaySkipped('swap')">🔄 Troquei de treino</div>
-      <div class="skip-option danger" onclick="closeModal('skipModal')">Cancelar</div>
-    </div>
-  </div>
-</div>
-
-<!-- MODAL HISTORY DETAIL -->
+<!-- MODAL HISTORY -->
 <div class="modal-bg" id="histModal">
   <div class="modal" id="histModalContent"></div>
 </div>
@@ -288,19 +282,16 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 <div class="screen active" id="screenHome">
   <div class="hdr">
     <div class="hdr-logo">💪 <span>Treino</span></div>
-    <div class="hdr-month" id="hdrMonth">MAI/26</div>
+    <div class="hdr-month" id="hdrMonth">JUN/26</div>
     <div class="hdr-weeks">
-      <button class="week-btn" data-w="1" onclick="setWeek(1)">S3</button>
-      <button class="week-btn" data-w="2" onclick="setWeek(2)">S4</button>
-      <button class="week-btn" data-w="3" onclick="setWeek(3)">JUN</button>
+      <button class="week-btn" data-w="1" onclick="setWeek(1)">S1</button>
+      <button class="week-btn" data-w="2" onclick="setWeek(2)">S2</button>
+      <button class="week-btn" data-w="3" onclick="setWeek(3)">S3</button>
       <button class="week-btn deload" data-w="4" onclick="setWeek(4)">DL</button>
     </div>
   </div>
   <div class="content">
-    <div style="margin:12px 16px 0;background:rgba(42,219,111,0.1);border:1px solid rgba(42,219,111,0.3);border-radius:12px;padding:10px 14px;font-size:12px;color:#2adb6f;font-weight:500;">
-  🏆 Prova 17/Mai concluída: 80,4 km · 33,3 km/h · NP 161W · TSS 165,7 &nbsp;|&nbsp; Fase atual: S3 Recovery → S4 Força Base
-</div>
-<div class="home-hero">
+    <div class="home-hero">
       <div class="home-greeting" id="homeGreeting">Bom dia, <span>Hiallyson!</span></div>
       <div class="home-date" id="homeDate"></div>
       <div class="home-today" id="homeTodayCard" onclick="goToTodayWorkout()">
@@ -317,15 +308,29 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
       <div class="stat-card"><div class="stat-val" id="statMonthTrains">0</div><div class="stat-lbl">Treinos no mês</div></div>
       <div class="stat-card"><div class="stat-val" id="statStreak">0</div><div class="stat-lbl">Sequência dias</div></div>
     </div>
+    <!-- BIOIMPEDÂNCIA JUN/26 -->
+    <div class="bio-card">
+      <div class="bio-title">📊 INBODY 01/JUN/26 — 83pts</div>
+      <div class="bio-grid">
+        <div class="bio-item"><div class="bio-val" style="color:var(--orange);">69,1<span style="font-size:14px">kg</span></div><div class="bio-lbl">Peso corporal</div><div class="bio-delta delta-up">↑ +1,1 vs Mai</div></div>
+        <div class="bio-item"><div class="bio-val" style="color:var(--green);">33,5<span style="font-size:14px">kg</span></div><div class="bio-lbl">Massa Muscular</div><div class="bio-delta delta-up">↑ +1,5 vs Mai 🔥</div></div>
+        <div class="bio-item"><div class="bio-val" style="color:var(--blue);">10,2<span style="font-size:14px">kg</span></div><div class="bio-lbl">Gordura</div><div class="bio-delta" style="color:var(--text3);">→ estável</div></div>
+        <div class="bio-item"><div class="bio-val" style="color:var(--amber);">14,7<span style="font-size:14px">%</span></div><div class="bio-lbl">% Gordura</div><div class="bio-delta" style="color:var(--green);">✓ zona ideal</div></div>
+      </div>
+      <div style="margin-top:10px;background:var(--bg3);border-radius:8px;padding:8px 10px;font-size:11px;color:var(--text2);">
+        🎯 Meta Jun: MME ≥ 34 kg · Peso 70 kg · %G ≤ 14,7% · TMB 1.642 kcal
+      </div>
+    </div>
     <div class="cal-section">
-      <div class="section-title">📅 CALENDÁRIO</div>
+      <div class="section-title">📅 CALENDÁRIO JUNHO</div>
       <div class="cal-grid" id="calGrid"></div>
       <div class="cal-legend">
-        <div class="leg-item"><div class="leg-dot" style="background:#e8394a"></div>Push A</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#3a7bd5"></div>Pull B</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#9b4be8"></div>Inf C</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#2adb6f"></div>Full D</div>
-        <div class="leg-item"><div class="leg-dot" style="background:#f0a82a"></div>Cardio</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#e8394a"></div>A Push</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#3a7bd5"></div>B Pull</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#9b4be8"></div>C Inferior</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#2ad5d5"></div>D Upper C</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#f0a82a"></div>Ciclismo</div>
+        <div class="leg-item"><div class="leg-dot" style="background:#2adb6f"></div>Corrida</div>
       </div>
     </div>
   </div>
@@ -337,9 +342,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
     <button onclick="goHome()" style="background:none;border:none;color:var(--text2);font-size:18px;cursor:pointer;padding:4px;">←</button>
     <div class="hdr-logo" id="workoutHdrTitle">💪 <span>Treino</span></div>
     <div class="hdr-weeks">
-      <button class="week-btn" data-w="1" onclick="setWeek(1)">S3</button>
-      <button class="week-btn" data-w="2" onclick="setWeek(2)">S4</button>
-      <button class="week-btn" data-w="3" onclick="setWeek(3)">JUN</button>
+      <button class="week-btn" data-w="1" onclick="setWeek(1)">S1</button>
+      <button class="week-btn" data-w="2" onclick="setWeek(2)">S2</button>
+      <button class="week-btn" data-w="3" onclick="setWeek(3)">S3</button>
       <button class="week-btn deload" data-w="4" onclick="setWeek(4)">DL</button>
     </div>
   </div>
@@ -348,9 +353,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 
 <!-- ===== DASHBOARD ===== -->
 <div class="screen" id="screenDash">
-  <div class="hdr">
-    <div class="hdr-logo">📊 <span>Dashboard</span></div>
-  </div>
+  <div class="hdr"><div class="hdr-logo">📊 <span>Dashboard</span></div></div>
   <div class="content" id="dashContent"></div>
 </div>
 
@@ -365,22 +368,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
   <div class="hdr"><div class="hdr-logo">⚙️ <span>Config</span></div></div>
   <div class="content">
     <div style="padding:16px 0 0;">
-      <div class="settings-section">
-        <div class="section-title">📅 PERIODIZAÇÃO ATIVA — MAIO 2026</div>
-        <div style="background:var(--bg3);border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:12px;line-height:1.8;color:var(--text2);">
-          <div style="color:var(--green);font-weight:700;">S3 ← ATUAL (18–24/Mai)</div>
-          <div>Recovery pós-prova · 4×12 compostos · RIR 3 · –20% carga · Seg/Qua/Qui/Sex musculação · Ter/Qua/Sáb bike</div>
-          <div style="color:var(--orange);font-weight:700;margin-top:8px;">S4 (25–31/Mai)</div>
-          <div>Força Base · 4×8–10 · RIR 1–2 · Sobrecarga progressiva · Seg/Ter/Qui/Sex musculação · Qua/Sáb bike · Dom corrida</div>
-          <div style="color:var(--blue);font-weight:700;margin-top:8px;">JUN — Build</div>
-          <div>Volume pleno · 4×10 · RPE 8 · Pós-InBody 01/Jun · Progressão semanal de cargas</div>
-          <div style="color:var(--amber);font-weight:700;margin-top:8px;">DL — Deload</div>
-          <div>–20% carga · RIR 4 · Quando score overtraining ≥ 5 ou após 4 semanas de S4/Jun</div>
-          <div style="margin-top:10px;padding-top:8px;border-top:1px solid var(--border);font-size:11px;color:var(--text3);">
-            🔔 Token Garmin ~26/Mai · InBody 01/Jun · Split: Push/Pull/Inferior/Full Body · 4×/semana
-          </div>
-        </div>
-      </div>
       <div class="settings-section">
         <div class="section-title">💾 DADOS</div>
         <div class="settings-row" onclick="exportData()">
@@ -397,7 +384,14 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
         <div class="section-title">⏱️ DESCANSO PADRÃO</div>
         <div class="settings-row" onclick="setRestTime(60)"><div><div class="settings-row-label">60 segundos</div><div class="settings-row-sub">Isolamento</div></div><div class="settings-row-icon" id="rest60">○</div></div>
         <div class="settings-row" onclick="setRestTime(90)"><div><div class="settings-row-label">90 segundos</div><div class="settings-row-sub">Compostos (padrão)</div></div><div class="settings-row-icon" id="rest90">●</div></div>
-        <div class="settings-row" onclick="setRestTime(120)"><div><div class="settings-row-label">120 segundos</div><div class="settings-row-sub">Pesado / força</div></div><div class="settings-row-icon" id="rest120">○</div></div>
+        <div class="settings-row" onclick="setRestTime(120)"><div><div class="settings-row-label">120 segundos</div><div class="settings-row-sub">Pesado / força máxima</div></div><div class="settings-row-icon" id="rest120">○</div></div>
+      </div>
+      <div class="settings-section">
+        <div class="section-title">📈 PERIODIZAÇÃO JUN/26</div>
+        <div class="settings-row"><div><div class="settings-row-label">S1 · 01–07/Jun · Acumulação I</div><div class="settings-row-sub">4×10–12 · RIR 2–3 · Volume base</div></div><div class="settings-row-icon">🔵</div></div>
+        <div class="settings-row"><div><div class="settings-row-label">S2 · 08–14/Jun · Acumulação II</div><div class="settings-row-sub">4×8–10 · RIR 1–2 · Carga progressiva</div></div><div class="settings-row-icon">🟠</div></div>
+        <div class="settings-row"><div><div class="settings-row-label">S3 · 15–21/Jun · Intensificação</div><div class="settings-row-sub">5×6–8 · RIR 0–1 · Drop-sets + Rest-pause</div></div><div class="settings-row-icon">🔴</div></div>
+        <div class="settings-row"><div><div class="settings-row-label">DL · 22–30/Jun · Deload + Bioimpedância</div><div class="settings-row-sub">3×10–12 · RIR 3–4 · Recuperação + medição</div></div><div class="settings-row-icon">🟡</div></div>
       </div>
       <div class="settings-section">
         <div class="section-title">🗑️ ZONA DE PERIGO</div>
@@ -406,7 +400,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
           <div class="settings-row-icon">⚠️</div>
         </div>
       </div>
-      <div style="text-align:center;padding:16px;font-size:11px;color:var(--text3);">v2.0 · Treino Hiallyson · Dados salvos localmente</div>
+      <div style="text-align:center;padding:16px;font-size:11px;color:var(--text3);">
+        v2.1 Jun/26 · Treino Hiallyson · Dados salvos localmente<br>
+        Split: Upper A Push · Upper B Pull · Lower A · Upper C<br>
+        Seg · Ter · Qui · Sex | Qua=Ciclismo | Sáb=Ciclismo Longo | Dom=Corrida
+      </div>
     </div>
   </div>
 </div>
@@ -416,8 +414,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
   <div class="nav-btn active" id="navHome" onclick="showScreen('Home')"><div class="nav-icon">🏠</div><div class="nav-label">Home</div></div>
   <div class="nav-btn" id="navA" onclick="openWorkout('push')"><div class="nav-icon">💪</div><div class="nav-label">A Push</div></div>
   <div class="nav-btn" id="navB" onclick="openWorkout('pull')"><div class="nav-icon">🔙</div><div class="nav-label">B Pull</div></div>
-  <div class="nav-btn" id="navC" onclick="openWorkout('inf')"><div class="nav-icon">🦵</div><div class="nav-label">C Inf</div></div>
-  <div class="nav-btn" id="navD" onclick="openWorkout('full')"><div class="nav-icon">⚡</div><div class="nav-label">D Full B</div></div>
+  <div class="nav-btn" id="navC" onclick="openWorkout('inf')"><div class="nav-icon">🦵</div><div class="nav-label">C Inferior</div></div>
+  <div class="nav-btn" id="navD" onclick="openWorkout('upperc')"><div class="nav-icon">⚡</div><div class="nav-label">D Upper C</div></div>
   <div class="nav-btn" id="navDash" onclick="showScreen('Dash');renderDash()"><div class="nav-icon">📊</div><div class="nav-label">Dashboard</div></div>
   <div class="nav-btn" id="navHist" onclick="showScreen('History');renderHistory()"><div class="nav-icon">📋</div><div class="nav-label">Histórico</div></div>
   <div class="nav-btn" id="navSet" onclick="showScreen('Settings')"><div class="nav-icon">⚙️</div><div class="nav-label">Config</div></div>
@@ -425,170 +423,220 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Barlow
 
 <script>
 // ============================================================
-// WORKOUT DATA
+// WORKOUT DATA — JUNHO 2026
+// Seg=push | Ter=pull | Qui=inf | Sex=upperc
 // ============================================================
 const WORKOUTS = {
-  push:{id:'push',name:'Push Superior',day:'Segunda-Feira',emoji:'💪',
-    muscles:'Peitoral · Deltóide Ant/Méd · Tríceps',duration:'65–80 min',
-    warmup:'5 min — rotação de ombros bilateral, band pull-apart 2×15, mobilidade torácica com rolo',
+
+  // ─── UPPER A — PUSH (Segunda) ───────────────────────────
+  push:{id:'push',name:'Upper A — Push',day:'Segunda-Feira',emoji:'💪',
+    muscles:'Peitoral · Deltóide Ant/Lat · Tríceps',duration:'75–80 min',
+    warmup:'10 min — mobilidade torácica, rotação de ombros, elástico band pull-apart, 2×10 flexões leves',
     blocks:[
-      {label:'BLOCO 1 — PEITO PRINCIPAL',exercises:[
-        {id:'ps1',n:1,name:'Supino Reto com Barra',equip:'Barra + Banco',muscle:'Peitoral maior (ênfase esternal)',muscleGroup:'Peito',
-         sets:{S1:'4×12',S2:'4×8',S3:'4×10',DL:'3×10'},rpe:'S1:7 RIR3 / S2:9 RIR1',cad:'3-1-1-0',
-         notes:'S3 Recovery: técnica perfeita, RIR 3, barra a 2cm do peito. S4 Força: adicione 2,5kg se completou todas as reps. Cotovelos 45–75°. Pausa 1s no peito.'},
-        {id:'ps2',n:2,name:'Supino Inclinado Halteres',equip:'Halteres + Banco 30–45°',muscle:'Peitoral superior / Deltóide ant.',muscleGroup:'Peito',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Amplitude total — halteres até a altura do peito. Não trave cotovelos no topo. Progressão S4: +2kg quando completar todas as reps com RIR≥2.'},
-        {id:'ps3',n:3,name:'Crossover Cabo (médio→baixo)',equip:'Cabo duplo',muscle:'Peitoral (adução + pico)',muscleGroup:'Peito',
-         sets:{S1:'3×15',S2:'3×12',S3:'3×12',DL:'3×12'},rpe:'S1:7 / S2:8',cad:'2-2-2-0',
-         notes:'Isometria 2s na contração. Leve inclinação do tronco à frente. Não solte rápido — excêntrico 2s.'}
+      {label:'BLOCO 1 — PEITO COMPOUND',exercises:[
+        {id:'ps1',n:1,name:'Supino Reto com Barra',equip:'Barra + Banco',muscle:'Peitoral médio',muscleGroup:'Peito',
+         sets:{S1:'4×10',S2:'4×8',S3:'5×6',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'3-1-1-0',
+         notes:'Barra desce até 2cm do peito. Cotovelos 45–60°. Pausa 1s no peito na S3. Drop-set na última série da S3 (–20% carga, continuar até falha).'},
+        {id:'ps2',n:2,name:'Supino Inclinado com Halteres',equip:'Halteres + Banco 30°',muscle:'Peitoral superior',muscleGroup:'Peito',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'3-1-1-0',
+         notes:'Amplitude total. Não trave cotovelos no topo. Supino reto + Inclinado = cobertura completa do peitoral.'},
+        {id:'ps3',n:3,name:'Peck Deck / Crossover Cabo',equip:'Máquina peck deck ou Cabo',muscle:'Peitoral (adução)',muscleGroup:'Peito',
+         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'Isometria 2s na contração máxima. Foco total na adução do peitoral. Variação: Crossover de alto para baixo.'}
       ]},
-      {label:'BLOCO 2 — OMBROS',exercises:[
-        {id:'ps4',n:4,name:'Desenvolvimento Halteres',equip:'Halteres + Banco c/ encosto',muscle:'Deltóide anterior e médio',muscleGroup:'Ombro',
-         sets:{S1:'4×12',S2:'4×8',S3:'4×10',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'2-1-1-0',
-         notes:'Cotovelos levemente à frente do plano frontal. Não hiperestenda lombar — encosto vertical. Progressão: +1kg bilateral a cada 2 sessões S4.'},
-        {id:'ps5',n:5,name:'Elevação Lateral Halteres',equip:'Halteres',muscle:'Deltóide médio (feixe principal)',muscleGroup:'Ombro',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×12',DL:'3×12'},rpe:'S1:7 / S2:8',cad:'2-0-3-0',
-         notes:'Excêntrico lento 3s — ativa mais fibras. Polegar levemente abaixo do mindinho no topo. Máx 90°. Carga leve — técnica > peso.'},
-        {id:'ps6',n:6,name:'Face Pull Cabo (corda)',equip:'Cabo + corda',muscle:'Deltóide post. / Manguito rotador',muscleGroup:'Ombro',
-         sets:{S1:'3×15',S2:'3×15',S3:'3×15',DL:'3×12'},rpe:'S1:6 / S2:7',cad:'2-1-2-0',
-         notes:'Cotovelos NA altura dos ombros — não acima. Rotação externa no final. ESSENCIAL para saúde do ombro com volume de ciclismo.'}
+      {label:'BLOCO 2 — DELTÓIDE',exercises:[
+        {id:'ps4',n:4,name:'Desenvolvimento com Halteres',equip:'Halteres + suporte',muscle:'Deltóide ant/méd',muscleGroup:'Ombro',
+         sets:{S1:'4×10',S2:'4×8',S3:'5×6',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'2-1-1-0',
+         notes:'Não hiperestenda a lombar. Cotovelos alinhados no início. Rest-pause na S3: 6 reps, 15s, mais 3 reps, 15s, mais 2 reps.'},
+        {id:'ps5',n:5,name:'Elevação Lateral com Halteres',equip:'Halteres',muscle:'Deltóide médio',muscleGroup:'Ombro',
+         sets:{S1:'4×12',S2:'4×12',S3:'4×12',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-0-2-1',
+         notes:'Leve flexão do cotovelo fixa. Não ultrapasse 90°. Pausa 1s no topo. Não use impulso lombar.'},
+        {id:'ps6',n:6,name:'Elevação Lateral no Cabo (inclinado)',equip:'Cabo baixo',muscle:'Deltóide médio (tensão constante)',muscleGroup:'Ombro',
+         sets:{S1:'3×15',S2:'3×12',S3:'3×12',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'2-1-2-0',
+         notes:'Cabo passa por trás do corpo. Tensão constante em toda a amplitude — vantagem sobre halter. Complementa a elevação bilateral.'},
+        {id:'ps7',n:7,name:'Elevação Frontal com Halteres',equip:'Halteres',muscle:'Deltóide anterior',muscleGroup:'Ombro',
+         sets:{S1:'3×12',S2:'3×10',S3:'3×10',DL:'3×12'},rpe:'S1:6 / S3:8',cad:'2-1-2-0',
+         notes:'Polegar para cima. Não ultrapasse a linha dos ombros. Pode alternar os braços para maior controle.'}
       ]},
       {label:'BLOCO 3 — TRÍCEPS',exercises:[
-        {id:'ps7',n:7,name:'Tríceps Pulley Corda',equip:'Cabo + corda',muscle:'Tríceps lateral + medial',muscleGroup:'Tríceps',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S2:8',cad:'2-0-1-1',
-         notes:'Abre a corda no final (pronação) para máximo pico. Cotovelos fixos ao lado do tronco. Extensão 100%.'},
-        {id:'ps8',n:8,name:'Tríceps Testa Halteres',equip:'Halteres + Banco',muscle:'Cabeça longa do tríceps',muscleGroup:'Tríceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Cotovelos apontando para o teto — imóveis. Amplitude até as orelhas. Cabeça longa é o maior feixe do tríceps — prioridade de definição.'}
+        {id:'ps8',n:8,name:'Tríceps Pulley — Barra Reta',equip:'Cabo',muscle:'Tríceps (cabeça lateral)',muscleGroup:'Tríceps',
+         sets:{S1:'4×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-0-1-1',
+         notes:'Cotovelos fixos ao lado do tronco. Extensão completa. Pausa 1s no final.'},
+        {id:'ps9',n:9,name:'Tríceps Testa com Halteres',equip:'Halteres + Banco',muscle:'Tríceps (cabeça longa)',muscleGroup:'Tríceps',
+         sets:{S1:'3×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'Cotovelos imóveis apontando para cima. Amplitude até as orelhas. Cabeça longa é o maior feixe do tríceps.'},
+        {id:'ps10',n:10,name:'Tríceps Coice no Cabo',equip:'Cabo',muscle:'Tríceps (contração final)',muscleGroup:'Tríceps',
+         sets:{S1:'3×15',S2:'3×12',S3:'3×12',DL:'3×15'},rpe:'S1:6 / S3:7',cad:'1-2-1-0',
+         notes:'Tronco inclinado 45°. Braço paralelo ao chão. Isometria 2s no topo. Excelente para definição do tríceps.'}
       ]}
     ]
   },
-  pull:{id:'pull',name:'Pull Superior',day:'Terça-Feira',emoji:'🔙',
-    muscles:'Dorsal · Trapézio · Bíceps · Deltóide Post.',duration:'65–80 min',
-    warmup:'5 min — rotação escapular, band pull-apart 2×20, mobilidade torácica',
+
+  // ─── UPPER B — PULL (Terça) ─────────────────────────────
+  pull:{id:'pull',name:'Upper B — Pull',day:'Terça-Feira',emoji:'🔙',
+    muscles:'Dorsal · Trapézio · Bíceps · Deltóide Post.',duration:'75–80 min',
+    warmup:'10 min — rotação escapular, band pull-apart 3×15, mobilidade torácica, hang passivo 30s',
     blocks:[
-      {label:'BLOCO 1 — DORSAL PRINCIPAL',exercises:[
-        {id:'pl1',n:1,name:'Barra Fixa Pronada',equip:'Barra fixa',muscle:'Grande dorsal / Bíceps',muscleGroup:'Dorsal',
-         sets:{S1:'4×Máx(mín6)',S2:'4×Máx',S3:'4×Máx',DL:'3×6'},rpe:'S1:8 / S2:9',cad:'3-1-1-0',
-         notes:'Pegada larga pronada. Puxar até o queixo. Se < 6 reps: use assistida. Se > 12: adicione lastro 5kg. Escápulas ativas ANTES de puxar.',isBodyweight:true},
-        {id:'pl2',n:2,name:'Remada Curvada Barra',equip:'Barra',muscle:'Dorsal / Rombóide / Trapézio méd.',muscleGroup:'Dorsal',
-         sets:{S1:'4×12',S2:'4×8',S3:'4×10',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'2-1-1-1',
-         notes:'Tronco 45°, lombar NEUTRA. Cotovelo puxa reto para trás — não abre. Pausa 1s contraído. Progressão S4: +5kg quando completar todas reps RIR≥2.'},
-        {id:'pl3',n:3,name:'Remada Unilateral Halter',equip:'Halter + banco',muscle:'Dorsal / Rombóide (isolamento)',muscleGroup:'Dorsal',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'2-1-1-0',
-         notes:'Cotovelo bem atrás do plano do corpo. Não rotacione o tronco. Foco na contração do dorsal — não do bíceps.'}
+      {label:'BLOCO 1 — DORSAL COMPOUND',exercises:[
+        {id:'pl1',n:1,name:'Barra Fixa Pronada (ou assistida)',equip:'Barra fixa',muscle:'Grande dorsal (amplitude)',muscleGroup:'Dorsal',
+         sets:{S1:'4×Máx',S2:'4×Máx',S3:'4×Máx',DL:'3×8'},rpe:'S1:8 / S2:9 / S3:9',cad:'3-1-1-0',
+         notes:'Pegada pronada larga. Puxar até a clavícula. Ativar escápulas antes de puxar. Use lastro se fizer >10 reps. Assistida se <5 reps.',isBodyweight:true},
+        {id:'pl2',n:2,name:'Remada Curvada com Barra',equip:'Barra',muscle:'Dorsal + Rombóide + Trapézio médio',muscleGroup:'Dorsal',
+         sets:{S1:'4×10',S2:'4×8',S3:'5×6',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'2-1-1-1',
+         notes:'Tronco 45°, lombar neutra. Puxar cotovelo para trás. Pausa 1s no topo. Drop-set na última série da S3.'},
+        {id:'pl3',n:3,name:'Remada Unilateral com Halter',equip:'Halter + banco',muscle:'Dorsal unilateral + Rombóide',muscleGroup:'Dorsal',
+         sets:{S1:'3×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'2-1-1-0',
+         notes:'Cotovelo bem atrás do corpo. Não rotacione o tronco. Corrije assimetrias dorsal D/E.'}
       ]},
-      {label:'BLOCO 2 — TRAPÉZIO E OMBRO POSTERIOR',exercises:[
-        {id:'pl4',n:4,name:'Encolhimento com Barra',equip:'Barra',muscle:'Trapézio superior e médio',muscleGroup:'Trapézio',
-         sets:{S1:'4×15',S2:'4×12',S3:'4×12',DL:'3×12'},rpe:'S1:7 / S2:8',cad:'1-2-1-0',
-         notes:'Pausa 2s no topo. Movimento estritamente vertical — não rotacione os ombros. Carga alta é bem-vinda aqui.'},
-        {id:'pl5',n:5,name:'Crucifixo Inverso (halteres)',equip:'Halteres + banco inclinado',muscle:'Deltóide post. / Rombóide',muscleGroup:'Ombro',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×12',DL:'3×12'},rpe:'S1:6 / S2:8',cad:'2-1-2-1',
-         notes:'Cotovelos levemente flexionados fixos. Squeeze máximo no topo. Carga leve — deltóide posterior é pequeno. Isometria 1s no topo.'}
+      {label:'BLOCO 2 — PUXADA + REMADA CABO',exercises:[
+        {id:'pl4',n:4,name:'Puxada Supinada (polia alta)',equip:'Polia alta',muscle:'Dorsal + Bíceps',muscleGroup:'Dorsal',
+         sets:{S1:'4×10',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
+         notes:'Pegada supinada na largura dos ombros. Puxar até o queixo. Excelente para espessura do dorsal inferior.'},
+        {id:'pl5',n:5,name:'Remada Sentada no Cabo (triângulo)',equip:'Cabo baixo + triângulo',muscle:'Dorsal médio + Rombóide',muscleGroup:'Dorsal',
+         sets:{S1:'4×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-2-0',
+         notes:'Costas eretas. Puxar cotovelos para trás. Pausa 1s. Apertar escápulas no final. Excelente para espessura.'}
       ]},
-      {label:'BLOCO 3 — BÍCEPS',exercises:[
-        {id:'pl6',n:6,name:'Rosca Direta Barra EZ',equip:'Barra EZ',muscle:'Bíceps braquial (pico)',muscleGroup:'Bíceps',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'2-1-1-1',
-         notes:'Cotovelos FIXOS ao lado do tronco. Não bascule. Pausa 1s no topo. Extensão 100% embaixo. Progressão: +2,5kg quando completar todas reps.'},
-        {id:'pl7',n:7,name:'Rosca Concentrada Halter',equip:'Halter + banco',muscle:'Pico do bíceps (cabeça curta)',muscleGroup:'Bíceps',
-         sets:{S1:'3×12',S2:'3×10',S3:'3×10',DL:'3×10'},rpe:'S1:7 / S2:8',cad:'2-1-2-0',
-         notes:'Cotovelo apoiado na coxa interna. Supine o pulso no topo. O melhor exercício para definir o pico do bíceps.'},
-        {id:'pl8',n:8,name:'Rosca Scott (banco)',equip:'Banco Scott + Barra EZ',muscle:'Bíceps (cabeça longa)',muscleGroup:'Bíceps',
-         sets:{S1:'3×12',S2:'3×10',S3:'3×10',DL:'3×10'},rpe:'S1:7 / S2:8',cad:'3-1-1-0',
-         notes:'Amplitude máxima sem hiperestender. Excêntrico lento 3s — o mais importante para hipertrofia do bíceps. Não solte rápido.'}
+      {label:'BLOCO 3 — TRAPÉZIO + DELTÓIDE POST.',exercises:[
+        {id:'pl6',n:6,name:'Face Pull no Cabo (corda)',equip:'Cabo alto + corda',muscle:'Deltóide post. + Manguito rotador',muscleGroup:'Ombro Post.',
+         sets:{S1:'4×15',S2:'4×15',S3:'4×15',DL:'3×15'},rpe:'S1:6 / S3:7',cad:'2-2-1-0',
+         notes:'Cotovelos na altura dos ombros. Puxar a corda em direção à testa. ESSENCIAL para saúde do ombro e postura. Nunca pular.'},
+        {id:'pl7',n:7,name:'Crucifixo Inverso com Halteres',equip:'Halteres + banco inclinado',muscle:'Deltóide posterior + Rombóide',muscleGroup:'Ombro Post.',
+         sets:{S1:'3×15',S2:'4×12',S3:'4×12',DL:'3×15'},rpe:'S1:6 / S3:8',cad:'2-1-2-1',
+         notes:'Cotovelos levemente flexionados. Apertar escápulas no final. Pode fazer sentado ou deitado no banco inclinado.'},
+        {id:'pl8',n:8,name:'Encolhimento com Halteres',equip:'Halteres',muscle:'Trapézio superior',muscleGroup:'Trapézio',
+         sets:{S1:'4×15',S2:'4×12',S3:'4×12',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'1-2-1-0',
+         notes:'Movimento vertical puro — sem rotação. Pausa 2s no topo. Não role os ombros.'}
+      ]},
+      {label:'BLOCO 4 — BÍCEPS',exercises:[
+        {id:'pl9',n:9,name:'Rosca Direta com Barra EZ',equip:'Barra EZ',muscle:'Bíceps braquial',muscleGroup:'Bíceps',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'Cotovelos fixos. Não bascule. Extensão total embaixo. Drop-set na última série da S3.'},
+        {id:'pl10',n:10,name:'Rosca Martelo com Halteres',equip:'Halteres',muscle:'Bíceps + Braquiorradial',muscleGroup:'Bíceps',
+         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
+         notes:'Polegar para cima. Excêntrico controlado de 2s. Trabalha o braquiorradial — braço mais grosso na visão lateral.'},
+        {id:'pl11',n:11,name:'Rosca Concentrada Unilateral',equip:'Halter + banco',muscle:'Pico do bíceps',muscleGroup:'Bíceps',
+         sets:{S1:'3×12',S2:'3×10',S3:'3×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'3-2-1-0',
+         notes:'Cotovelo no joelho. Supinação total no topo. Ideal para pico — corrige assimetria braço D/E.'}
       ]}
     ]
   },
-  inf:{id:'inf',name:'Inferior + Core',day:'Quinta-Feira',emoji:'🦵',
-    muscles:'Quadríceps · Isquiotibiais · Glúteos · Panturrilha · Core',duration:'65–80 min',
-    warmup:'5 min — mobilidade de quadril 90/90, ativação glúteo médio com banda, mobilidade tornozelo',
+
+  // ─── LOWER A — INFERIOR (Quinta) ────────────────────────
+  inf:{id:'inf',name:'Lower A — Inferior',day:'Quinta-Feira',emoji:'🦵',
+    muscles:'Quadríceps · Isquiotibiais · Panturrilha · Core',duration:'75–80 min',
+    warmup:'10 min — mobilidade de quadril (90/90 hip stretch), ativação com banda elástica no joelho, agachamento com peso corporal 2×15',
     blocks:[
-      {label:'BLOCO 1 — QUADRÍCEPS DOMINANTE',exercises:[
-        {id:'in1',n:1,name:'Agachamento Livre com Barra',equip:'Barra + Rack',muscle:'Quadríceps / Glúteo / Core',muscleGroup:'Quadríceps',
-         sets:{S1:'4×12',S2:'4×8',S3:'4×10',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Profundidade: coxa paralela ao chão mínimo. Lombar neutra — barra no trapézio médio. Joelhos SOBRE os pés. S3 Recovery: -20% carga. Progressão S4: +2,5kg semanal.'},
-        {id:'in2',n:2,name:'Leg Press 45°',equip:'Leg press',muscle:'Quadríceps / Glúteo (pés médios)',muscleGroup:'Quadríceps',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Pés na largura dos ombros, altura média. Amplitude total — joelhos quase no peito. NÃO trave os joelhos no topo.'},
-        {id:'in3',n:3,name:'Cadeira Extensora',equip:'Máquina',muscle:'Quadríceps (isolamento VMO)',muscleGroup:'Quadríceps',
-         sets:{S1:'3×15',S2:'4×12',S3:'4×12',DL:'3×12'},rpe:'S1:7 / S2:8',cad:'2-2-1-0',
-         notes:'Isometria 2s no topo — ativa o VMO ao máximo. Excêntrico 2s. Ótimo exercício de definição da parte distal do quadríceps.'}
+      {label:'BLOCO 1 — QUADRÍCEPS COMPOUND',exercises:[
+        {id:'in1',n:1,name:'Agachamento Livre com Barra',equip:'Barra + Rack',muscle:'Quadríceps + Glúteo (estabilizador)',muscleGroup:'Quadríceps',
+         sets:{S1:'4×10',S2:'4×8',S3:'5×6',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'3-1-1-0',
+         notes:'Profundidade mínima: coxa paralela ao chão. Lombar neutra. Joelhos alinhados com os pés. Drop-set na última série da S3.'},
+        {id:'in2',n:2,name:'Leg Press 45°',equip:'Leg press 45°',muscle:'Quadríceps + Glúteo',muscleGroup:'Quadríceps',
+         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×12'},rpe:'S1:7 / S2:8 / S3:9',cad:'3-1-1-0',
+         notes:'Pés na largura dos ombros. Não trave joelhos no topo. Desce até 90° no joelho. Volume após agachamento.'},
+        {id:'in3',n:3,name:'Leg Press Unilateral (perna E extra)',equip:'Leg press 45°',muscle:'Quadríceps unilateral (correção)',muscleGroup:'Quadríceps',
+         sets:{S1:'2×12D+3×12E',S2:'2×10D+3×10E',S3:'2×8D+3×8E',DL:'2×12 cada'},rpe:'S1:7 / S3:8',cad:'3-1-1-0',
+         notes:'Perna E tem 270g menos de massa que D (InBody 01/Jun). 1 série extra na perna E para corrigir assimetria gradualmente.'},
+        {id:'in4',n:4,name:'Cadeira Extensora',equip:'Máquina',muscle:'Quadríceps (isolado)',muscleGroup:'Quadríceps',
+         sets:{S1:'4×12',S2:'4×12',S3:'4×12',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'Isometria 2s no topo. Foco no VMO (vasto medial oblíquo). Excêntrico lento. Excelente finalizador.'}
       ]},
-      {label:'BLOCO 2 — POSTERIOR E GLÚTEOS',exercises:[
-        {id:'in4',n:4,name:'Terra Stiff (barra)',equip:'Barra',muscle:'Isquiotibiais / Glúteo / Eretores',muscleGroup:'Posterior',
-         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×8'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Barra desce pela perna — nunca afaste da canela. Lombar neutra SEMPRE. Sentir o alongamento dos isquiotibiais. S3: -25% carga. S4: foco em carregar pesado com técnica.'},
-        {id:'in5',n:5,name:'Mesa Flexora',equip:'Máquina',muscle:'Isquiotibiais (isolamento)',muscleGroup:'Posterior',
-         sets:{S1:'4×12',S2:'4×12',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S2:8',cad:'2-1-3-0',
-         notes:'EXCÊNTRICO 3s — principal estímulo. Quadril pressionado na máquina. Não use impulso. Essencial para isquiotibiais equilibrados com o ciclismo.'},
-        {id:'in6',n:6,name:'Hip Thrust com Barra',equip:'Barra + banco',muscle:'Glúteo máximo (pico de contração)',muscleGroup:'Glúteo',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×10',DL:'3×10'},rpe:'S1:7 / S2:8',cad:'1-2-1-0',
-         notes:'Pausa 2s no topo — quadril NEUTRO, não hiperextenda lombar. Joelhos 90° no topo. Melhor exercício para glúteo. Barra na dobra do quadril — use proteção.'}
+      {label:'BLOCO 2 — POSTERIOR DE COXA',exercises:[
+        {id:'in5',n:5,name:'Terra Romeno com Halteres',equip:'Halteres',muscle:'Isquiotibiais + Glúteo',muscleGroup:'Posterior',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'3-1-1-0',
+         notes:'Sentir o alongamento nos isquiotibiais. Não arredonde a lombar. Halteres descem pela frente das coxas. Joelhos levemente flexionados.'},
+        {id:'in6',n:6,name:'Mesa Flexora (Leg Curl deitado)',equip:'Máquina',muscle:'Isquiotibiais (isolado)',muscleGroup:'Posterior',
+         sets:{S1:'4×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-3-0',
+         notes:'Quadril pressionado no banco. Excêntrico de 3s obrigatório. Não use impulso. Pausa 1s na contração.'},
+        {id:'in7',n:7,name:'Cadeira Flexora (Leg Curl sentado)',equip:'Máquina',muscle:'Isquiotibiais (ângulo diferente)',muscleGroup:'Posterior',
+         sets:{S1:'3×15',S2:'3×12',S3:'3×12',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'2-1-2-0',
+         notes:'Posição sentada muda o ângulo de trabalho do isquiotibial vs. deitado. Usar os dois maximiza o desenvolvimento.'}
       ]},
-      {label:'BLOCO 3 — PANTURRILHA E CORE',exercises:[
-        {id:'in7',n:7,name:'Panturrilha em Pé (máquina)',equip:'Máquina / Smith',muscle:'Gastrocnêmio',muscleGroup:'Panturrilha',
-         sets:{S1:'4×15',S2:'4×15',S3:'4×12',DL:'3×15'},rpe:'S1:7 / S2:8',cad:'1-2-1-2',
-         notes:'Pausa 2s no topo + 2s embaixo (alongamento). Amplitude total obrigatória. Progressão: panturrilha responde a volume alto — nunca <12 reps.'},
-        {id:'in8',n:8,name:'Prancha + Rotação Lateral',equip:'Tapete',muscle:'Core — reto abd. / oblíquos',muscleGroup:'Core',
-         sets:{S1:'3×40s',S2:'3×50s',S3:'4×50s',DL:'3×40s'},rpe:'S1:7 / S2:8',cad:'ISO',
-         notes:'Prancha lateral: 20s cada lado + 10s central. Não deixe quadril cair. Oblíquos são determinantes para definição do tronco.',isBodyweight:true},
-        {id:'in9',n:9,name:'Roda Abdominal (ab wheel)',equip:'Roda abdominal',muscle:'Reto abdominal / Core profundo',muscleGroup:'Core',
-         sets:{S1:'3×10',S2:'3×12',S3:'4×12',DL:'3×8'},rpe:'S1:7 / S2:9',cad:'3-0-1-0',
-         notes:'Extensão controlada — só até onde a lombar permanece neutra. O melhor exercício para espessura do reto abdominal. Progressão: amplitude > reps.',isBodyweight:true}
+      {label:'BLOCO 3 — PANTURRILHA + CORE',exercises:[
+        {id:'in8',n:8,name:'Panturrilha em Pé (máquina)',equip:'Máquina ou Smith',muscle:'Gastrocnêmio',muscleGroup:'Panturrilha',
+         sets:{S1:'4×20',S2:'4×15',S3:'5×12',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'Amplitude máxima — calcanhar toca o chão. Pausa 2s no topo. Panturrilha responde melhor a alto volume.'},
+        {id:'in9',n:9,name:'Panturrilha Sentado (máquina)',equip:'Máquina',muscle:'Sóleo (fibra lenta)',muscleGroup:'Panturrilha',
+         sets:{S1:'4×20',S2:'4×15',S3:'4×15',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'2-2-1-0',
+         notes:'Sóleo tem predominância de fibra lenta — alto volume essencial. Diferente do gastrocnêmio (pé reto vs dobrado).'},
+        {id:'in10',n:10,name:'Prancha Frontal + Dead Bug',equip:'Tapete',muscle:'Core profundo + Estabilização',muscleGroup:'Core',
+         sets:{S1:'3×45s+3×10',S2:'4×50s+3×12',S3:'4×60s+3×12',DL:'3×45s+3×10'},rpe:'S1:7 / S3:8',cad:'ISO',
+         notes:'Prancha: corpo rígido, não deixe o quadril cair. Dead bug: braço + perna opostos simultaneamente. Core não compromete ciclismo do sábado.',isBodyweight:true}
       ]}
     ]
   },
-  full:{id:'full',name:'Full Body Hipertrofia',day:'Sexta-Feira',emoji:'⚡',
-    muscles:'Peito supl. · Dorsal supl. · Ombro rot. · Bíceps · Tríceps · Perna unilateral · Core',duration:'65–80 min',
-    warmup:'5 min — mobilidade geral: quadril + ombro + torácica. Nada de cardio — foco neural.',
+
+  // ─── UPPER C — Push/Pull Variações (Sexta) ──────────────
+  upperc:{id:'upperc',name:'Upper C — Push/Pull',day:'Sexta-Feira',emoji:'⚡',
+    muscles:'Peito Dec. · Arnold · Dorsal · Bíceps Scott · Tríceps Paralelas',duration:'85–90 min',
+    warmup:'10 min — mobilidade geral articular, elíptico leve 5 min, rotação de ombros com halteres leves',
     blocks:[
-      {label:'BLOCO 1 — COMPOSTOS PRINCIPAIS',exercises:[
-        {id:'fb1',n:1,name:'Terra Romeno com Halteres',equip:'Halteres',muscle:'Isquiotibiais / Glúteo / Eretores',muscleGroup:'Posterior',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Halteres descem pela frente das coxas — costas RETAS. Joelhos levemente flexionados fixos. Diferente do stiff da quinta: mais amplitude e controle. Complementa o dia de perna sem sobrecarregar lombar.'},
-        {id:'fb2',n:2,name:'Supino com Halteres Declinado',equip:'Halteres + banco declinado',muscle:'Peitoral inferior (porção esternal baixa)',muscleGroup:'Peito',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Treina o peitoral inferior — feixe NÃO trabalhado no push da segunda. Completa a harmonia muscular do peito. Amplitude total, cotovelos 60–70°.'},
-        {id:'fb3',n:3,name:'Desenvolvimento Barra (ou Halteres) — Press Militar',equip:'Barra ou Halteres',muscle:'Deltóide med/ant · Tríceps',muscleGroup:'Ombro',
-         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:9',cad:'2-1-1-0',
-         notes:'Variação do ombro para sexta — press diferente do desenvolvimento sentado da segunda. Em pé: mais recrutamento de core. Cotovelos levemente à frente.'}
+      {label:'BLOCO 1 — PEITO VARIAÇÕES',exercises:[
+        {id:'uc1',n:1,name:'Supino Declinado com Halteres',equip:'Halteres + Banco declinado',muscle:'Peitoral inferior',muscleGroup:'Peito',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'3-1-1-0',
+         notes:'Exercício NÃO feito na Segunda. Peitoral inferior é frequentemente sub-treinado. Amplitude total. Cuidado com os ombros.'},
+        {id:'uc2',n:2,name:'Crucifixo Reto com Halteres',equip:'Halteres + Banco plano',muscle:'Peitoral (abertura)',muscleGroup:'Peito',
+         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'3-1-2-0',
+         notes:'Cotovelos levemente flexionados (fixos). Descer até sentir o alongamento. Não desça além da linha dos ombros. Foco na contração.'},
+        {id:'uc3',n:3,name:'Pullover com Halter',equip:'Halter + Banco',muscle:'Peitoral (porção mais longa) + Dorsal',muscleGroup:'Peito',
+         sets:{S1:'3×12',S2:'3×10',S3:'3×10',DL:'3×12'},rpe:'S1:6 / S3:8',cad:'3-1-1-0',
+         notes:'Exercício híbrido — trabalha peitoral E dorsal simultaneamente. Braços semi-estendidos. Movimento de arco atrás da cabeça.'}
       ]},
-      {label:'BLOCO 2 — ISOLAMENTO SUPERIOR',exercises:[
-        {id:'fb4',n:4,name:'Puxada Supinada (polia)',equip:'Polia alta',muscle:'Dorsal inferior / Bíceps',muscleGroup:'Dorsal',
-         sets:{S1:'4×12',S2:'4×10',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:8',cad:'3-1-1-0',
-         notes:'Pegada supinada na largura dos ombros — ativa mais o dorsal inferior que a barra fixa pronada. Puxar até o peito, escápulas para baixo e para trás.'},
-        {id:'fb5',n:5,name:'Rosca Martelo no Cabo',equip:'Cabo com corda',muscle:'Braquiorradial / Bíceps lateral',muscleGroup:'Bíceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×10'},rpe:'S1:7 / S2:8',cad:'2-1-2-0',
-         notes:'Pegada neutra (martelo) no cabo — tensão constante diferente dos halteres. Complementa rosca direta e scott da terça. Cotovelos fixos.'},
-        {id:'fb6',n:6,name:'Tríceps Francês no Cabo',equip:'Cabo + corda (posição alta)',muscle:'Cabeça longa do tríceps',muscleGroup:'Tríceps',
-         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×10'},rpe:'S1:7 / S2:8',cad:'3-1-1-0',
-         notes:'Cabo alto, corpo inclinado para frente. A cabeça longa do tríceps fica em máximo alongamento — maior hipertrofia. Cotovelos apontando para frente fixos.'}
+      {label:'BLOCO 2 — OMBRO VARIAÇÕES',exercises:[
+        {id:'uc4',n:4,name:'Desenvolvimento Arnold',equip:'Halteres',muscle:'Deltóide (3 cabeças)',muscleGroup:'Ombro',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S2:8 / S3:9',cad:'2-1-2-0',
+         notes:'NÃO feito na Segunda. Rotação completa de supinado para pronado durante o movimento. Maior ativação total do deltóide vs. desenvolvimento clássico.',isAdvanced:true},
+        {id:'uc5',n:5,name:'Rotação Externa com Cabo',equip:'Cabo baixo',muscle:'Manguito rotador (infraespinhoso)',muscleGroup:'Ombro',
+         sets:{S1:'3×15',S2:'3×15',S3:'3×15',DL:'3×15'},rpe:'S1:5 / S3:6',cad:'2-2-2-0',
+         notes:'Cotovelo a 90° fixo ao lado do corpo. Rotação externa lenta. PREVENTIVO — saúde do ombro. Carga muito leve (3–5 kg).'},
+        {id:'uc6',n:6,name:'Upright Row (Remada Alta) com Halteres',equip:'Halteres',muscle:'Deltóide médio + Trapézio',muscleGroup:'Ombro',
+         sets:{S1:'3×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-1-0',
+         notes:'Halteres sobem pela linha do corpo. Cotovelos mais altos que as mãos. NÃO use barra (risco ombro). Excelente para deltóide médio + trapézio.'}
       ]},
-      {label:'BLOCO 3 — MEMBROS INFERIORES UNILATERAL + CORE',exercises:[
-        {id:'fb7',n:7,name:'Agachamento Búlgaro (halteres)',equip:'Halteres + banco',muscle:'Quadríceps / Glúteo unilateral',muscleGroup:'Quadríceps',
-         sets:{S1:'3×10/l',S2:'4×8/l',S3:'4×8/l',DL:'3×8/l'},rpe:'S1:7 / S2:9',cad:'3-1-1-0',
-         notes:'Pé da frente a 1 passo do banco. Joelho traseiro desce vertical. Foco no glúteo = torso mais inclinado. Foco no quad = torso mais reto. Corrige assimetrias entre pernas.'},
-        {id:'fb8',n:8,name:'Cadeira Abdutora + Adutora (supersét)',equip:'Máquina',muscle:'Glúteo médio / Adutores',muscleGroup:'Glúteo',
-         sets:{S1:'3×15+15',S2:'3×15+15',S3:'4×12+12',DL:'3×12+12'},rpe:'S1:6 / S2:7',cad:'2-1-2-0',
-         notes:'Supersét: abdução seguida de adução sem descanso. Glúteo médio é crítico para estabilidade no ciclismo e corrida. Pausa 1s no pico de cada.',isSuperset:true},
-        {id:'fb9',n:9,name:'Prancha com Elevação de Braço',equip:'Tapete',muscle:'Core anti-rotacional / Oblíquos',muscleGroup:'Core',
-         sets:{S1:'3×8/l',S2:'3×10/l',S3:'4×10/l',DL:'3×8/l'},rpe:'S1:7 / S2:8',cad:'2-2-1-0',
-         notes:'Em posição de prancha, elevar um braço por 2s — manter quadril completamente estável. Anti-rotação é o estímulo central para definição dos oblíquos. Sem rotação do tronco.',isBodyweight:true}
+      {label:'BLOCO 3 — DORSAL VARIAÇÕES',exercises:[
+        {id:'uc7',n:7,name:'Puxada Aberta Pronada (polia)',equip:'Polia alta',muscle:'Grande dorsal (largura)',muscleGroup:'Dorsal',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'Pegada bem aberta. Puxar até a clavícula. Diferente da terça (supinada). Foco em LARGURA do dorsal.'},
+        {id:'uc8',n:8,name:'Remada na Máquina (chest support)',equip:'Máquina de remada apoiada',muscle:'Dorsal + Rombóide',muscleGroup:'Dorsal',
+         sets:{S1:'4×12',S2:'4×10',S3:'4×10',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-2-0',
+         notes:'Peito apoiado elimina compensação lombar. Isolamento total do dorsal e rombóide. Se não houver máquina: remada inclinada no banco.'}
+      ]},
+      {label:'BLOCO 4 — BÍCEPS VARIAÇÕES',exercises:[
+        {id:'uc9',n:9,name:'Rosca Scott com Barra EZ',equip:'Banco Scott + Barra EZ',muscle:'Bíceps (pico)',muscleGroup:'Bíceps',
+         sets:{S1:'4×10',S2:'4×8',S3:'4×8',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-2-1-0',
+         notes:'NÃO feito na terça. Banco Scott elimina o balanço. Isola completamente o bíceps. Excêntrico de 2–3s obrigatório para máximo estímulo.'},
+        {id:'uc10',n:10,name:'Rosca 21s com Barra EZ',equip:'Barra EZ',muscle:'Bíceps (amplitude total)',muscleGroup:'Bíceps',
+         sets:{S1:'3×21',S2:'3×21',S3:'3×21',DL:'3×21'},rpe:'S1:7 / S3:8',cad:'1-0-1-0',
+         notes:'7 reps metade inferior (0°→90°) + 7 reps metade superior (90°→topo) + 7 reps amplitude completa. Técnica avançada — queima intensa.',isAdvanced:true}
+      ]},
+      {label:'BLOCO 5 — TRÍCEPS VARIAÇÕES',exercises:[
+        {id:'uc11',n:11,name:'Mergulho nas Paralelas (Dips)',equip:'Paralelas',muscle:'Tríceps + Peitoral inferior',muscleGroup:'Tríceps',
+         sets:{S1:'4×12',S2:'4×10',S3:'4×Máx',DL:'3×10'},rpe:'S1:7 / S3:9',cad:'3-1-1-0',
+         notes:'NÃO feito na segunda. Tronco levemente inclinado à frente para ativar peitoral inferior também. Use colete com lastro se > 12 reps.',isBodyweight:true},
+        {id:'uc12',n:12,name:'Tríceps Coice com Halteres (bilateral)',equip:'Halteres + banco',muscle:'Tríceps (definição)',muscleGroup:'Tríceps',
+         sets:{S1:'3×15',S2:'3×12',S3:'3×12',DL:'3×15'},rpe:'S1:6 / S3:8',cad:'1-2-1-0',
+         notes:'Tronco paralelo ao chão. Braços paralelos ao tronco na extensão. Isometria 2s no topo. Excelente para separação muscular.'}
+      ]},
+      {label:'BLOCO 6 — CORE PESADO',exercises:[
+        {id:'uc13',n:13,name:'Rotação Russa com Peso',equip:'Disco ou Halter + Tapete',muscle:'Oblíquo + Core rotacional',muscleGroup:'Core',
+         sets:{S1:'3×20',S2:'4×20',S3:'4×20',DL:'3×15'},rpe:'S1:7 / S3:8',cad:'1-0-1-0',
+         notes:'Pés levantados do chão. Toque o peso no chão em cada lado. Controle rotacional total. 1 rep = 1 lado.',isBodyweight:true},
+        {id:'uc14',n:14,name:'Elevação de Pernas Suspenso',equip:'Barra fixa ou suporte',muscle:'Reto abdominal inferior',muscleGroup:'Core',
+         sets:{S1:'3×15',S2:'4×15',S3:'4×15',DL:'3×12'},rpe:'S1:7 / S3:8',cad:'2-1-2-0',
+         notes:'Sem balanço. Pernas sobem até 90° mínimo. Excêntrico lento de 2s. Versão difícil: pernas retas. Versão fácil: joelhos dobrados.',isBodyweight:true}
       ]}
     ]
   }
 };
 
-const SCHEDULE = {1:'push',2:'pull',4:'inf',5:'full'}; // Seg=Push Ter=Pull Qui=Inf Sex=Full
+// ─── Seg=1(push) · Ter=2(pull) · Qua=3(ciclismo) · Qui=4(inf) · Sex=5(upperc) · Sáb=6(ciclismo-longo) · Dom=0(corrida)
+const SCHEDULE = {1:'push',2:'pull',4:'inf',5:'upperc'};
 const WEEK_CONFIG = {
-  S1:{label:'S3 — Recovery',sub:'18–24/Mai · 4×12 compostos · RIR 3 · Pós-prova'},
-  S2:{label:'S4 — Força Base',sub:'25–31/Mai · 4×8–10 · RIR 1–2 · Sobrecarga'},
-  S3:{label:'Junho — Build',sub:'Jun W1–2 · 4×10 · RPE 8 · Volume pleno'},
-  DL:{label:'Deload',sub:'–20% carga · RIR 4 · Manutenção'}
+  S1:{label:'Semana 1',sub:'Acumulação I · 4×10–12 · RIR 2–3'},
+  S2:{label:'Semana 2',sub:'Acumulação II · 4×8–10 · RIR 1–2'},
+  S3:{label:'Semana 3',sub:'Intensificação · 5×6–8 · Drop-sets'},
+  DL:{label:'Deload',sub:'3×10–12 · RIR 3–4 · –30% carga'}
 };
-// Progressão de carga entre semanas
-const WEEK_PROGRESS = {S1:{S2:1.05,S3:1.10,DL:0.88}, S2:{S3:1.05,DL:0.84}, S3:{DL:0.80}};
+const WEEK_PROGRESS = {S1:{S2:1.05,S3:1.10,DL:0.70}, S2:{S3:1.05,DL:0.70}, S3:{DL:0.70}};
 
 // ============================================================
 // STATE
@@ -596,128 +644,94 @@ const WEEK_PROGRESS = {S1:{S2:1.05,S3:1.10,DL:0.88}, S2:{S3:1.05,DL:0.84}, S3:{D
 let state = {
   currentWeek:'S1', currentWorkout:null,
   restTimer:null, restDuration:90, restRemaining:0,
-  restStartedAt:null, restPausedAt:null,
-  session:null
+  restStartedAt:null, session:null
 };
-
-// AudioContext para bip sonoro
 let audioCtx = null;
-function getAudio() {
-  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
-  return audioCtx;
-}
-function playBeep(freq=880, dur=0.15, vol=0.4) {
-  try {
-    const ctx = getAudio();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.connect(gain); gain.connect(ctx.destination);
-    osc.frequency.value = freq;
-    gain.gain.setValueAtTime(vol, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
-    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + dur);
-  } catch(e){}
-}
-function playAlertBeeps() {
-  // 5 bips crescentes nos últimos 5s
-  for(let i=0;i<5;i++) {
-    setTimeout(()=>playBeep(600+i*100, 0.12, 0.5), i*200);
-  }
-}
+function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playBeep(freq=880,dur=0.15,vol=0.4){
+  try{const ctx=getAudio();const osc=ctx.createOscillator();const gain=ctx.createGain();
+  osc.connect(gain);gain.connect(ctx.destination);osc.frequency.value=freq;
+  gain.gain.setValueAtTime(vol,ctx.currentTime);gain.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+  osc.start(ctx.currentTime);osc.stop(ctx.currentTime+dur);}catch(e){}}
+function playAlertBeeps(){for(let i=0;i<5;i++)setTimeout(()=>playBeep(600+i*100,0.12,0.5),i*200);}
 
 // ============================================================
 // STORAGE
 // ============================================================
-function getData() {
-  const d = localStorage.getItem('treino_app_data');
-  return d ? JSON.parse(d) : {sessions:[],settings:{restTime:90}};
-}
-function saveStorage(data) { localStorage.setItem('treino_app_data', JSON.stringify(data)); }
-function updateData(fn) { const d=getData(); fn(d); saveStorage(d); }
+function getData(){const d=localStorage.getItem('treino_jun26');return d?JSON.parse(d):{sessions:[],settings:{restTime:90}};}
+function saveStorage(data){localStorage.setItem('treino_jun26',JSON.stringify(data));}
+function updateData(fn){const d=getData();fn(d);saveStorage(d);}
 
 // ============================================================
 // INIT
 // ============================================================
-window.addEventListener('load', ()=>{
-  const data = getData();
-  state.currentWeek = data.settings?.lastWeek || 'S1';
-  state.restDuration = data.settings?.restTime || 90;
+window.addEventListener('load',()=>{
+  const data=getData();
+  state.currentWeek=data.settings?.lastWeek||'S1';
+  state.restDuration=data.settings?.restTime||90;
   updateWeekUI();
   renderHome();
   renderHistory();
   updateRestSettings();
 });
-
-// Retomar timer se estava rodando (bug fix: sair e voltar da tela)
-document.addEventListener('visibilitychange', ()=>{
-  if(document.visibilityState==='visible' && state.restStartedAt && !state.restTimer) {
-    const elapsed = Math.floor((Date.now() - state.restStartedAt)/1000);
-    state.restRemaining = Math.max(0, state.restDuration - elapsed);
-    if(state.restRemaining > 0) {
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState==='visible'&&state.restStartedAt&&!state.restTimer){
+    const elapsed=Math.floor((Date.now()-state.restStartedAt)/1000);
+    state.restRemaining=Math.max(0,state.restDuration-elapsed);
+    if(state.restRemaining>0){
       document.getElementById('restOverlay').classList.add('active');
       updateRestDisplay();
-      state.restTimer = setInterval(()=>{
-        state.restRemaining--;
-        updateRestDisplay();
-        if(state.restRemaining<=0) skipRest();
-        if(state.restRemaining===5) playAlertBeeps();
-      },1000);
-    } else {
-      skipRest();
-    }
+      state.restTimer=setInterval(()=>{state.restRemaining--;updateRestDisplay();
+        if(state.restRemaining<=0)skipRest();
+        if(state.restRemaining===5)playAlertBeeps();},1000);
+    }else skipRest();
   }
 });
 
 // ============================================================
 // SCREEN NAVIGATION
 // ============================================================
-function showScreen(name) {
+function showScreen(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('screen'+name).classList.add('active');
-  const navId = {Home:'navHome',Dash:'navDash',History:'navHist',Settings:'navSet'}[name];
-  if(navId) document.getElementById(navId).classList.add('active');
+  const navId={Home:'navHome',Dash:'navDash',History:'navHist',Settings:'navSet'}[name];
+  if(navId)document.getElementById(navId).classList.add('active');
 }
-function goHome() { showScreen('Home'); renderHome(); }
-function goToTodayWorkout() {
-  const type = SCHEDULE[new Date().getDay()];
-  if(type) openWorkout(type);
-  else showToast('Hoje é dia de descanso ou cardio');
+function goHome(){showScreen('Home');renderHome();}
+function goToTodayWorkout(){
+  const type=SCHEDULE[new Date().getDay()];
+  if(type)openWorkout(type);
+  else showToast('Hoje é dia de '+{0:'Corrida 🏃',3:'Ciclismo 🚴',6:'Pedal Longo 🚴'}[new Date().getDay()]||'Descanso 🛌');
 }
 
 // ============================================================
 // WORKOUT
 // ============================================================
-function openWorkout(type) {
-  state.currentWorkout = type;
-  const w = WORKOUTS[type];
+function openWorkout(type){
+  state.currentWorkout=type;
+  const w=WORKOUTS[type];
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  const nm={push:'navA',pull:'navB',inf:'navC',full:'navD'};
+  const nm={push:'navA',pull:'navB',inf:'navC',upperc:'navD'};
   document.getElementById(nm[type]).classList.add('active');
   document.getElementById('workoutHdrTitle').innerHTML=`${w.emoji} <span>${w.name}</span>`;
   initSession(type);
   renderWorkout(type);
   showScreen('Workout');
 }
-
-function initSession(type) {
-  const today = todayStr();
-  const data = getData();
-  let sess = data.sessions.find(s=>s.workoutId===type&&s.date===today);
-  if(!sess) {
-    sess = {workoutId:type,date:today,weekKey:state.currentWeek,seriesLog:{},startTime:Date.now(),finished:false};
-    data.sessions.push(sess);
-    saveStorage(data);
-  }
-  state.session = sess;
+function initSession(type){
+  const today=todayStr();const data=getData();
+  let sess=data.sessions.find(s=>s.workoutId===type&&s.date===today);
+  if(!sess){sess={workoutId:type,date:today,weekKey:state.currentWeek,seriesLog:{},startTime:Date.now(),finished:false};data.sessions.push(sess);saveStorage(data);}
+  state.session=sess;
 }
-
-function renderWorkout(type) {
-  const w = WORKOUTS[type];
-  const wk = state.currentWeek;
-  let totalSets=0, doneSets=0;
+function renderWorkout(type){
+  const w=WORKOUTS[type];const wk=state.currentWeek;
+  let totalSets=0,doneSets=0;
   w.blocks.forEach(b=>b.exercises.forEach(ex=>{
-    const n=parseInt(ex.sets[wk])||0; totalSets+=n;
+    const raw=ex.sets[wk]||'0×0';
+    // Para séries com formato especial (ex: "2×12D+3×12E"), conta manualmente
+    const n=countSets(raw);totalSets+=n;
     const log=getExLog(ex.id);
     for(let i=1;i<=n;i++){if(log[`s${i}`]?.done)doneSets++;}
   }));
@@ -737,7 +751,7 @@ function renderWorkout(type) {
   <div class="warmup-card"><div class="wi">🔥</div><div class="wt">${w.warmup}</div></div>`;
   w.blocks.forEach(block=>{
     html+=`<div class="block-divider"><div class="line"></div></div><div class="block-label">${block.label}</div>`;
-    block.exercises.forEach(ex=>{ html+=renderExCard(ex,type,wk); });
+    block.exercises.forEach(ex=>{html+=renderExCard(ex,type,wk);});
   });
   const allDone=doneSets>=totalSets&&totalSets>0;
   html+=`<button class="finish-btn${allDone?' visible':''}" id="finishBtn" onclick="finishWorkout('${type}')">🏆 FINALIZAR TREINO</button>`;
@@ -745,31 +759,41 @@ function renderWorkout(type) {
   startSessionTimer();
 }
 
-function renderExCard(ex, type, wk) {
+function countSets(setsStr){
+  // Formato padrão: "4×10" → 4
+  // Formato especial: "2×12D+3×12E" → 5
+  if(!setsStr)return 0;
+  if(setsStr.includes('+')){
+    return setsStr.split('+').reduce((acc,part)=>{const m=part.match(/^(\d+)/);return acc+(m?parseInt(m[1]):0);},0);
+  }
+  if(setsStr.includes('×Máx')||setsStr.includes('×21')||setsStr.includes('×Máx'))return parseInt(setsStr)||4;
+  const m=setsStr.match(/^(\d+)/);return m?parseInt(m[1]):0;
+}
+
+function renderExCard(ex,type,wk){
   const cc=type+'-col';
-  const setsKey=ex.sets[wk];
-  const numSets=parseInt(setsKey)||0;
+  const setsKey=ex.sets[wk]||'3×10';
+  const numSets=countSets(setsKey);
   const log=getExLog(ex.id);
   let doneCount=0;
   for(let i=1;i<=numSets;i++){if(log[`s${i}`]?.done)doneCount++;}
   const statusClass=doneCount===0?'':doneCount===numSets?'done':'partial';
-
-  // Calcular sugestões de carga baseadas em S1
-  const suggestions = getSuggestedWeights(ex.id, ex, wk);
-  const hasSuggestions = suggestions && Object.values(suggestions).some(v=>v>0);
-  const suggestBanner = (wk!=='S1' && hasSuggestions) ?
-    `<div class="kg-suggest-banner">💡 Sugestão baseada na S1 — clique em ✓ para aceitar</div>` : '';
-
+  const suggestions=getSuggestedWeights(ex.id,ex,wk);
+  const hasSuggestions=suggestions&&Object.values(suggestions).some(v=>v>0);
+  const suggestBanner=(wk!=='S1'&&hasSuggestions)?`<div class="kg-suggest-banner">💡 Sugestão baseada na S1 — ajuste se necessário</div>`:'';
+  const advBadge=ex.isAdvanced?'<span class="adv-badge">⚡ TÉCNICA AVANÇADA</span>':'';
   let seriesHTML='';
   for(let i=1;i<=numSets;i++){
     const sLog=log[`s${i}`]||{};
     const isDone=sLog.done||false;
     const isBodyweight=ex.isBodyweight;
-    // Valor salvo ou sugerido
     let displayKg='';
-    if(sLog.kg!==undefined&&sLog.kg!=='') displayKg=sLog.kg;
-    else if(suggestions&&suggestions[`s${i}`]) displayKg=suggestions[`s${i}`];
+    if(sLog.kg!==undefined&&sLog.kg!=='')displayKg=sLog.kg;
+    else if(suggestions&&suggestions[`s${i}`])displayKg=suggestions[`s${i}`];
     const isSuggested=(displayKg&&!sLog.kg&&!isDone);
+    // Reps display — extrai do formato
+    let repsDisplay=setsKey.split('×')[1]||'';
+    if(setsKey.includes('+')){repsDisplay='ver obs.';}
     seriesHTML+=`
     <div class="series-row" id="row_${ex.id}_${i}">
       <div class="series-label">S${i}</div>
@@ -783,7 +807,7 @@ function renderExCard(ex, type, wk) {
                onfocus="this.select();this.classList.remove('suggested')">`
       }
       ${isBodyweight?'':'<div class="kg-label">kg</div>'}
-      <div class="reps-display">${setsKey.split('×')[1]||''}</div>
+      <div class="reps-display">${repsDisplay}</div>
     </div>`;
   }
   const supersetBadge=ex.isSuperset?'<div class="superset-badge">⚡ SUPERSÉT</div>':'';
@@ -792,7 +816,7 @@ function renderExCard(ex, type, wk) {
     <div class="ex-header" onclick="toggleExCard('${ex.id}')">
       <div class="ex-num ${cc}">${ex.n}</div>
       <div style="flex:1;min-width:0;">
-        <div class="ex-name">${ex.name}</div>
+        <div class="ex-name">${ex.name}${advBadge}</div>
         <div class="ex-muscle">${ex.muscle}</div>
         <div class="ex-equip">${ex.equip}</div>
       </div>
@@ -814,52 +838,43 @@ function renderExCard(ex, type, wk) {
 }
 
 // ============================================================
-// SUGESTÃO DE CARGA (NOVO V2)
+// SUGESTÃO DE CARGA
 // ============================================================
-function getSuggestedWeights(exId, ex, targetWk) {
-  if(targetWk==='S1') return null;
+function getSuggestedWeights(exId,ex,targetWk){
+  if(targetWk==='S1')return null;
   const data=getData();
-  // Encontrar a carga da S1 mais recente para este exercício
   const s1Sessions=data.sessions.filter(s=>s.weekKey==='S1'&&s.seriesLog[exId]);
-  if(!s1Sessions.length) return null;
+  if(!s1Sessions.length)return null;
   const latest=s1Sessions.sort((a,b)=>b.date.localeCompare(a.date))[0];
   const s1Log=latest.seriesLog[exId];
-  // Pegar carga média das séries da S1
   const kgs=[];
-  for(let i=1;i<=4;i++){
-    const v=parseFloat(s1Log[`s${i}`]?.kg);
-    if(!isNaN(v)&&v>0) kgs.push(v);
-  }
-  if(!kgs.length) return null;
+  for(let i=1;i<=6;i++){const v=parseFloat(s1Log[`s${i}`]?.kg);if(!isNaN(v)&&v>0)kgs.push(v);}
+  if(!kgs.length)return null;
   const avgKg=kgs.reduce((a,b)=>a+b,0)/kgs.length;
-  // Calcular multiplicador
-  const mult = targetWk==='S2'?1.05:targetWk==='S3'?1.10:targetWk==='DL'?0.88:1;
-  const suggested=Math.round(avgKg*mult*2)/2; // arredonda para 0.5kg
-  const numSets=parseInt(ex.sets[targetWk])||0;
+  const mult=targetWk==='S2'?1.05:targetWk==='S3'?1.10:targetWk==='DL'?0.70:1;
+  const suggested=Math.round(avgKg*mult*2)/2;
+  const numSets=countSets(ex.sets[targetWk]);
   const result={};
-  for(let i=1;i<=numSets;i++) result[`s${i}`]=suggested;
+  for(let i=1;i<=numSets;i++)result[`s${i}`]=suggested;
   return result;
 }
-
-function toggleExCard(exId) {
-  document.getElementById('excard_'+exId).classList.toggle('expanded');
-}
+function toggleExCard(exId){document.getElementById('excard_'+exId).classList.toggle('expanded');}
 
 // ============================================================
 // SERIES TOGGLE
 // ============================================================
-function toggleSeries(exId, seriesNum, type, wk) {
+function toggleSeries(exId,seriesNum,type,wk){
   const chk=document.getElementById(`chk_${exId}_${seriesNum}`);
   const data=getData();
   let sess=data.sessions.find(s=>s.workoutId===type&&s.date===todayStr());
-  if(!sess) return;
-  if(!sess.seriesLog[exId]) sess.seriesLog[exId]={};
+  if(!sess)return;
+  if(!sess.seriesLog[exId])sess.seriesLog[exId]={};
   const key=`s${seriesNum}`;
   const wasDone=sess.seriesLog[exId][key]?.done||false;
   const kgEl=document.getElementById(`kg_${exId}_${seriesNum}`);
   const kg=kgEl?kgEl.value:'';
   sess.seriesLog[exId][key]={done:!wasDone,kg:kg,timestamp:Date.now()};
-  saveStorage(data); state.session=sess;
+  saveStorage(data);state.session=sess;
   chk.classList.toggle('done',!wasDone);
   chk.textContent=!wasDone?'✓':'';
   updateExStatus(exId,type,wk);
@@ -868,66 +883,61 @@ function toggleSeries(exId, seriesNum, type, wk) {
     const allExs=w.blocks.flatMap(b=>b.exercises);
     const curIdx=allExs.findIndex(e=>e.id===exId);
     const curEx=allExs[curIdx];
-    const numSets=parseInt(curEx.sets[wk])||0;
+    const numSets=countSets(curEx.sets[wk]);
     let nextInfo='';
-    if(seriesNum<numSets) nextInfo=`<strong>Próxima:</strong> ${curEx.name} — Série ${seriesNum+1}`;
-    else if(curIdx<allExs.length-1) nextInfo=`<strong>Próximo:</strong> ${allExs[curIdx+1].name}`;
+    if(seriesNum<numSets)nextInfo=`<strong>Próxima:</strong> ${curEx.name} — Série ${seriesNum+1}`;
+    else if(curIdx<allExs.length-1)nextInfo=`<strong>Próximo:</strong> ${allExs[curIdx+1].name}`;
     else nextInfo='<strong>Última série! 🏆</strong>';
     startRest(nextInfo);
     checkFinish(type,wk);
   }
 }
-
-function saveKg(exId, seriesNum, wk, val) {
+function saveKg(exId,seriesNum,wk,val){
   const data=getData();
   const sess=data.sessions.find(s=>s.workoutId===state.currentWorkout&&s.date===todayStr());
-  if(!sess) return;
-  if(!sess.seriesLog[exId]) sess.seriesLog[exId]={};
+  if(!sess)return;
+  if(!sess.seriesLog[exId])sess.seriesLog[exId]={};
   const key=`s${seriesNum}`;
-  if(!sess.seriesLog[exId][key]) sess.seriesLog[exId][key]={done:false};
+  if(!sess.seriesLog[exId][key])sess.seriesLog[exId][key]={done:false};
   sess.seriesLog[exId][key].kg=val;
-  saveStorage(data); state.session=sess;
+  saveStorage(data);state.session=sess;
 }
-
-function getExLog(exId) {
+function getExLog(exId){
   const data=getData();
   const sess=data.sessions.find(s=>s.workoutId===state.currentWorkout&&s.date===todayStr());
   return sess?.seriesLog?.[exId]||{};
 }
-
-function updateExStatus(exId, type, wk) {
+function updateExStatus(exId,type,wk){
   const allExs=WORKOUTS[type].blocks.flatMap(b=>b.exercises);
-  const ex=allExs.find(e=>e.id===exId); if(!ex) return;
-  const n=parseInt(ex.sets[wk])||0;
-  const log=getExLog(exId); let done=0;
+  const ex=allExs.find(e=>e.id===exId);if(!ex)return;
+  const n=countSets(ex.sets[wk]);
+  const log=getExLog(exId);let done=0;
   for(let i=1;i<=n;i++){if(log[`s${i}`]?.done)done++;}
-  const card=document.getElementById('excard_'+exId); if(!card) return;
+  const card=document.getElementById('excard_'+exId);if(!card)return;
   const dot=card.querySelector('.ex-status-dot');
   dot.className='ex-status-dot'+(done===0?'':done===n?' done':' partial');
 }
-
-function checkFinish(type, wk) {
-  const w=WORKOUTS[type]; let total=0,done=0;
+function checkFinish(type,wk){
+  const w=WORKOUTS[type];let total=0,done=0;
   w.blocks.forEach(b=>b.exercises.forEach(ex=>{
-    const n=parseInt(ex.sets[wk])||0; total+=n;
+    const n=countSets(ex.sets[wk]);total+=n;
     const log=getExLog(ex.id);
     for(let i=1;i<=n;i++){if(log[`s${i}`]?.done)done++;}
   }));
   const pct=total?Math.round(done/total*100):0;
   const pbar=document.querySelector('.progress-bar-fill');
   const plbl=document.querySelector('.progress-label span');
-  if(pbar) pbar.style.width=pct+'%';
-  if(plbl) plbl.textContent=`${done}/${total} séries · ${pct}%`;
+  if(pbar)pbar.style.width=pct+'%';
+  if(plbl)plbl.textContent=`${done}/${total} séries · ${pct}%`;
   const btn=document.getElementById('finishBtn');
-  if(btn) btn.className='finish-btn'+(done>=total&&total>0?' visible':'');
+  if(btn)btn.className='finish-btn'+(done>=total&&total>0?' visible':'');
 }
 
 // ============================================================
-// REST TIMER — V2: bug fix saída de tela + bip sonoro
+// REST TIMER
 // ============================================================
-function startRest(nextInfo='') {
-  // Inicializar AudioContext na interação do usuário
-  try { getAudio(); } catch(e){}
+function startRest(nextInfo=''){
+  try{getAudio();}catch(e){}
   document.getElementById('restNextInfo').innerHTML=nextInfo;
   state.restRemaining=state.restDuration;
   state.restStartedAt=Date.now();
@@ -937,37 +947,29 @@ function startRest(nextInfo='') {
   state.restTimer=setInterval(()=>{
     state.restRemaining--;
     updateRestDisplay();
-    if(state.restRemaining===5) playAlertBeeps();
-    if(state.restRemaining<=0) skipRest();
+    if(state.restRemaining===5)playAlertBeeps();
+    if(state.restRemaining<=0)skipRest();
   },1000);
 }
-
-function updateRestDisplay() {
+function updateRestDisplay(){
   const s=state.restRemaining;
   const circ=document.getElementById('restProgress');
-  const pct=s/state.restDuration;
   const len=2*Math.PI*82;
   circ.style.strokeDasharray=len;
-  circ.style.strokeDashoffset=len*(1-pct);
+  circ.style.strokeDashoffset=len*(1-s/state.restDuration);
   document.getElementById('restSecs').textContent=s;
-  circ.style.stroke=s<=5?'#e8394a':s<=10?'#e8394a':s<=30?'#f0a82a':'#f07c2a';
+  circ.style.stroke=s<=5?'#e8394a':s<=30?'#f0a82a':'#f07c2a';
 }
-
-function skipRest() {
-  clearInterval(state.restTimer);
-  state.restTimer=null;
-  state.restStartedAt=null;
+function skipRest(){
+  clearInterval(state.restTimer);state.restTimer=null;state.restStartedAt=null;
   document.getElementById('restOverlay').classList.remove('active');
 }
 
 // ============================================================
-// FINISH WORKOUT
+// FINISH
 // ============================================================
-function finishWorkout(type) {
-  updateData(d=>{
-    const sess=d.sessions.find(s=>s.workoutId===type&&s.date===todayStr());
-    if(sess){sess.finished=true;sess.endTime=Date.now();}
-  });
+function finishWorkout(type){
+  updateData(d=>{const sess=d.sessions.find(s=>s.workoutId===type&&s.date===todayStr());if(sess){sess.finished=true;sess.endTime=Date.now();}});
   showToast('🏆 Treino finalizado e salvo!');
   setTimeout(()=>{goHome();renderHome();renderHistory();},500);
 }
@@ -975,29 +977,24 @@ function finishWorkout(type) {
 // ============================================================
 // HOME
 // ============================================================
-function renderHome() {
-  const now=new Date(); const h=now.getHours();
-  document.getElementById('homeGreeting').innerHTML=`${h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'}, <span>Hiallyson!</span> 🏆`;
+function renderHome(){
+  const now=new Date();const h=now.getHours();
+  document.getElementById('homeGreeting').innerHTML=`${h<12?'Bom dia':h<18?'Boa tarde':'Boa noite'}, <span>Hiallyson!</span>`;
   const days=['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
   const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   document.getElementById('homeDate').textContent=`${days[now.getDay()]}, ${now.getDate()} de ${months[now.getMonth()]} ${now.getFullYear()}`;
-  const dow=now.getDay(); const workoutType=SCHEDULE[dow];
+  const dow=now.getDay();const workoutType=SCHEDULE[dow];
   const todayCard=document.getElementById('homeTodayCard');
   if(workoutType){
     const w=WORKOUTS[workoutType];
     document.getElementById('homeTodayLabel').textContent=`Hoje: Treino ${workoutType.toUpperCase()} — ${w.name}`;
     document.getElementById('homeTodaySub').textContent=`${w.muscles} · ${w.duration}`;
-    todayCard.className='home-today'; todayCard.onclick=()=>openWorkout(workoutType);
-  } else {
-    const ctMap={
-      0:'🏃 Corrida Z2 · Dom · 35min',
-      3:'🚴 Ciclismo Z2 · Qua · 60–75min',
-      6:'🚴 Ciclismo Z2 Longo · Sáb · 75–90min'
-    };
-    const ct=ctMap[dow]||'Descanso · Mobilidade 10min';
-    document.getElementById('homeTodayLabel').textContent=`Hoje: ${ct==='Descanso'?'🛌 '+ct:'🚴 '+ct}`;
-    document.getElementById('homeTodaySub').textContent=ct==='Descanso'?'Recuperação ativa':'Foco aeróbico';
-    todayCard.className='home-today rest'; todayCard.onclick=null;
+    todayCard.className='home-today';todayCard.onclick=()=>openWorkout(workoutType);
+  }else{
+    const ct={0:'Corrida 🏃',3:'Ciclismo Intenso 🚴',6:'Pedal Longo 🚴 (até 3h)'}[dow]||'Descanso 🛌';
+    document.getElementById('homeTodayLabel').textContent=`Hoje: ${ct}`;
+    document.getElementById('homeTodaySub').textContent={0:'Z2 + Intervalado — Foco aeróbico',3:'Z2/Z3 — Endurance',6:'Z2 longo — Base aeróbica'}[dow]||'Recuperação ativa';
+    todayCard.className='home-today rest';todayCard.onclick=null;
   }
   const data=getData();
   let seriesToday=0;
@@ -1009,244 +1006,170 @@ function renderHome() {
   document.getElementById('statWeekTrains').textContent=data.sessions.filter(s=>s.date>=weekStart&&s.finished).length;
   const monthStr=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}`;
   document.getElementById('statMonthTrains').textContent=data.sessions.filter(s=>s.date.startsWith(monthStr)&&s.finished).length;
-  let streak=0; const d2=new Date();
+  let streak=0;const d2=new Date();
   while(true){const ds=dateStr(d2);if(data.sessions.some(s=>s.date===ds&&s.finished)){streak++;d2.setDate(d2.getDate()-1);}else break;}
   document.getElementById('statStreak').textContent=streak;
   renderCalendar();
   document.getElementById('hdrMonth').textContent=`${months[now.getMonth()].toUpperCase()}/${String(now.getFullYear()).slice(2)}`;
 }
 
-function renderCalendar() {
-  const now=new Date(); const year=now.getFullYear(),month=now.getMonth();
+function renderCalendar(){
+  const now=new Date();const year=now.getFullYear(),month=now.getMonth();
   const firstDay=new Date(year,month,1).getDay();
   const daysInMonth=new Date(year,month+1,0).getDate();
   const data=getData();
   let html=['DOM','SEG','TER','QUA','QUI','SEX','SAB'].map(d=>`<div class="cal-day-hdr">${d}</div>`).join('');
-  for(let i=0;i<firstDay;i++) html+=`<div class="cal-day empty"></div>`;
+  for(let i=0;i<firstDay;i++)html+=`<div class="cal-day empty"></div>`;
   for(let d=1;d<=daysInMonth;d++){
     const dow=new Date(year,month,d).getDay();
     const ds=`${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
-    const wt=SCHEDULE[dow]; const cardio={0:'run',3:'cycle-int',6:'cycle-z2'}[dow];
+    const wt=SCHEDULE[dow];
+    const cardioType={3:'cardio',6:'cardio',0:'run'}[dow];
     let cls='cal-day',lbl='';
-    if(wt){cls+=` ${wt}`;lbl={push:'A',pull:'B',inf:'C',full:'D'}[wt];}
-    else if(cardio){cls+=' cardio';lbl='🚴';}
+    if(wt){cls+=` ${wt}`;lbl={push:'A',pull:'B',inf:'C',upperc:'D'}[wt];}
+    else if(cardioType){cls+=` ${cardioType}`;lbl={3:'🚴',6:'🚴',0:'🏃'}[dow];}
     else cls+=' rest-day';
-    if(d===now.getDate()) cls+=' today';
+    if(d===now.getDate()&&month===now.getMonth()&&year===now.getFullYear())cls+=' today';
     const sess=data.sessions.find(s=>s.date===ds);
-    if(sess?.finished) cls+=' done'; else if(sess?.skipped) cls+=' skipped';
+    if(sess?.finished)cls+=' done';else if(sess?.skipped)cls+=' skipped';
     html+=`<div class="${cls}"><div class="day-num">${d}</div>${lbl?`<div class="day-type">${lbl}</div>`:''}</div>`;
   }
   document.getElementById('calGrid').innerHTML=html;
 }
 
 // ============================================================
-// DASHBOARD — V2 (NOVO)
+// DASHBOARD
 // ============================================================
-function renderDash() {
+function renderDash(){
   const data=getData();
   const allExs=Object.values(WORKOUTS).flatMap(w=>w.blocks.flatMap(b=>b.exercises));
-  // Montar select de exercícios
   const exOptions=allExs.filter(e=>!e.isBodyweight).map(e=>`<option value="${e.id}">${e.name}</option>`).join('');
-  let html=`
-  <div style="padding:16px 0 0;">
-  <div class="dash-section">
-    <div class="dash-title">📈 EVOLUÇÃO DE CARGA</div>
-    <select class="ex-selector" id="dashExSelect" onchange="renderExChart()">
-      <option value="">— Selecione um exercício —</option>
-      ${exOptions}
-    </select>
-    <div id="dashChartArea"></div>
-  </div>
-  <div class="dash-section">
-    <div class="dash-title">📅 COMPARATIVO SEMANAL</div>
-    <select class="ex-selector" id="dashExComp" onchange="renderCompTable()">
-      <option value="">— Selecione um exercício —</option>
-      ${exOptions}
-    </select>
-    <div id="dashCompArea"></div>
-  </div>
-  <div class="dash-section">
-    <div class="dash-title">💪 VOLUME POR GRUPO MUSCULAR</div>
-    <div id="dashMuscleArea"></div>
-  </div>
-  </div>`;
+  let html=`<div style="padding:16px 0 0;">
+  <div class="dash-section"><div class="dash-title">📈 EVOLUÇÃO DE CARGA</div>
+    <select class="ex-selector" id="dashExSelect" onchange="renderExChart()"><option value="">— Selecione —</option>${exOptions}</select>
+    <div id="dashChartArea"></div></div>
+  <div class="dash-section"><div class="dash-title">📅 COMPARATIVO SEMANAL</div>
+    <select class="ex-selector" id="dashExComp" onchange="renderCompTable()"><option value="">— Selecione —</option>${exOptions}</select>
+    <div id="dashCompArea"></div></div>
+  <div class="dash-section"><div class="dash-title">💪 VOLUME POR GRUPO MUSCULAR</div>
+    <div id="dashMuscleArea"></div></div></div>`;
   document.getElementById('dashContent').innerHTML=html;
   renderMuscleVolume();
 }
-
-function renderExChart() {
+function renderExChart(){
   const exId=document.getElementById('dashExSelect').value;
   if(!exId){document.getElementById('dashChartArea').innerHTML='';return;}
   const ex=Object.values(WORKOUTS).flatMap(w=>w.blocks.flatMap(b=>b.exercises)).find(e=>e.id===exId);
   const data=getData();
-  // Agrupar por semana (data + weekKey)
   const sessions=data.sessions.filter(s=>s.seriesLog[exId]&&s.finished).sort((a,b)=>a.date.localeCompare(b.date));
-  if(!sessions.length){
-    document.getElementById('dashChartArea').innerHTML=`<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Nenhum dado registrado ainda</div>`;
-    return;
-  }
-  // Calcular carga média por sessão
+  if(!sessions.length){document.getElementById('dashChartArea').innerHTML=`<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Nenhum dado ainda</div>`;return;}
   const bars=sessions.map(sess=>{
     const log=sess.seriesLog[exId];
     const kgs=Object.values(log).map(s=>parseFloat(s.kg)).filter(v=>!isNaN(v)&&v>0);
-    const avg=kgs.length?Math.max(...kgs):0;
+    const mx=kgs.length?Math.max(...kgs):0;
     const dt=sess.date.slice(8)+'/'+sess.date.slice(5,7);
-    return {label:`${sess.weekKey||''}\n${dt}`,val:avg,wk:sess.weekKey};
+    return{label:`${sess.weekKey||''}\n${dt}`,val:mx,wk:sess.weekKey};
   });
   const maxVal=Math.max(...bars.map(b=>b.val),1);
   const wkColors={S1:'s1',S2:'s2',S3:'s3',DL:'dl'};
-  let barsHtml=bars.map(b=>`
-    <div class="bar-col">
-      <div class="bar-val">${b.val>0?b.val+'kg':'-'}</div>
-      <div class="bar-fill ${wkColors[b.wk]||'s2'}" style="height:${Math.max(4,b.val/maxVal*90)}px"></div>
-      <div class="bar-lbl">${b.label.replace('\n','<br>')}</div>
-    </div>`).join('');
-  document.getElementById('dashChartArea').innerHTML=`
-  <div class="chart-wrap">
+  const barsHtml=bars.map(b=>`<div class="bar-col"><div class="bar-val">${b.val>0?b.val+'kg':'-'}</div>
+    <div class="bar-fill ${wkColors[b.wk]||'s2'}" style="height:${Math.max(4,b.val/maxVal*90)}px"></div>
+    <div class="bar-lbl">${b.label.replace('\n','<br>')}</div></div>`).join('');
+  document.getElementById('dashChartArea').innerHTML=`<div class="chart-wrap">
     <div class="chart-title">${ex.name} — Carga máxima por sessão</div>
-    <div class="bar-chart">${barsHtml}</div>
-    <div class="chart-legend">
-      <div class="chart-leg-item"><div class="chart-leg-dot" style="background:#3a7bd5"></div>S1</div>
-      <div class="chart-leg-item"><div class="chart-leg-dot" style="background:var(--orange)"></div>S2</div>
-      <div class="chart-leg-item"><div class="chart-leg-dot" style="background:var(--red)"></div>S3</div>
-      <div class="chart-leg-item"><div class="chart-leg-dot" style="background:var(--amber)"></div>DL</div>
-    </div>
-  </div>`;
+    <div class="bar-chart">${barsHtml}</div></div>`;
 }
-
-function renderCompTable() {
+function renderCompTable(){
   const exId=document.getElementById('dashExComp').value;
   if(!exId){document.getElementById('dashCompArea').innerHTML='';return;}
   const data=getData();
   const sessions=data.sessions.filter(s=>s.seriesLog[exId]&&s.finished).sort((a,b)=>b.date.localeCompare(a.date));
-  if(!sessions.length){
-    document.getElementById('dashCompArea').innerHTML=`<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Nenhum dado registrado ainda</div>`;
-    return;
-  }
-  // Últimas 6 sessões
+  if(!sessions.length){document.getElementById('dashCompArea').innerHTML=`<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Nenhum dado ainda</div>`;return;}
   const recent=sessions.slice(0,6);
-  let rows=recent.map((sess,i)=>{
+  const rows=recent.map((sess,i)=>{
     const log=sess.seriesLog[exId];
     const kgs=Object.values(log).map(s=>parseFloat(s.kg)).filter(v=>!isNaN(v)&&v>0);
     const maxKg=kgs.length?Math.max(...kgs):0;
     const seriesDone=Object.values(log).filter(s=>s.done).length;
-    // Comparar com sessão anterior
     let diffHtml='—';
     if(i<recent.length-1){
       const prevLog=recent[i+1].seriesLog[exId];
       const prevKgs=Object.values(prevLog).map(s=>parseFloat(s.kg)).filter(v=>!isNaN(v)&&v>0);
       const prevMax=prevKgs.length?Math.max(...prevKgs):0;
-      if(prevMax>0&&maxKg>0){
-        const diff=maxKg-prevMax;
-        const cls=diff>0?'up':diff<0?'down':'same';
-        diffHtml=`<span class="${cls}">${diff>0?'+':''}${diff}kg</span>`;
-      }
+      if(prevMax>0&&maxKg>0){const diff=maxKg-prevMax;const cls=diff>0?'up':diff<0?'down':'same';diffHtml=`<span class="${cls}">${diff>0?'+':''}${diff}kg</span>`;}
     }
     const dt=sess.date.slice(8)+'/'+sess.date.slice(5,7);
-    return `<tr>
-      <td>${dt} <span style="font-size:10px;color:var(--text3);">${sess.weekKey||''}</span></td>
-      <td class="kg-val">${maxKg>0?maxKg+'kg':'—'}</td>
-      <td>${seriesDone} séries</td>
-      <td>${diffHtml}</td>
-    </tr>`;
+    return `<tr><td>${dt} <span style="font-size:10px;color:var(--text3);">${sess.weekKey||''}</span></td>
+      <td class="kg-val">${maxKg>0?maxKg+'kg':'—'}</td><td>${seriesDone} séries</td><td>${diffHtml}</td></tr>`;
   }).join('');
-  document.getElementById('dashCompArea').innerHTML=`
-  <div class="chart-wrap">
-    <table class="comp-table">
-      <tr><th>Data</th><th>Carga máx.</th><th>Volume</th><th>vs anterior</th></tr>
-      ${rows}
-    </table>
-  </div>`;
+  document.getElementById('dashCompArea').innerHTML=`<div class="chart-wrap"><table class="comp-table">
+    <tr><th>Data</th><th>Carga máx.</th><th>Volume</th><th>Δ anterior</th></tr>${rows}</table></div>`;
 }
-
-function renderMuscleVolume() {
+function renderMuscleVolume(){
   const data=getData();
   const monthStr=`${new Date().getFullYear()}-${String(new Date().getMonth()+1).padStart(2,'0')}`;
   const monthSess=data.sessions.filter(s=>s.date.startsWith(monthStr)&&s.finished);
   const muscleVol={};
   const allExs=Object.values(WORKOUTS).flatMap(w=>w.blocks.flatMap(b=>b.exercises));
   monthSess.forEach(sess=>{
-    const wk=sess.weekKey||'S2';
     Object.entries(sess.seriesLog).forEach(([exId,log])=>{
-      const ex=allExs.find(e=>e.id===exId); if(!ex) return;
+      const ex=allExs.find(e=>e.id===exId);if(!ex)return;
       const mg=ex.muscleGroup||ex.muscle;
       const doneSeries=Object.values(log).filter(s=>s.done).length;
-      if(!muscleVol[mg]) muscleVol[mg]=0;
-      muscleVol[mg]+=doneSeries;
+      if(!muscleVol[mg])muscleVol[mg]=0;muscleVol[mg]+=doneSeries;
     });
   });
-  if(!Object.keys(muscleVol).length){
-    document.getElementById('dashMuscleArea').innerHTML=`<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Complete treinos para ver o volume</div>`;
-    return;
-  }
+  if(!Object.keys(muscleVol).length){document.getElementById('dashMuscleArea').innerHTML=`<div style="text-align:center;padding:24px;color:var(--text3);font-size:13px;">Complete treinos para ver o volume</div>`;return;}
   const sorted=Object.entries(muscleVol).sort((a,b)=>b[1]-a[1]);
   const maxVol=sorted[0][1];
-  const rows=sorted.map(([mg,vol])=>`
-    <div class="muscle-bar-row">
-      <div class="muscle-name">${mg}</div>
-      <div class="muscle-bar-bg"><div class="muscle-bar-fill" style="width:${Math.round(vol/maxVol*100)}%"></div></div>
-      <div class="muscle-vol">${vol}</div>
-    </div>`).join('');
-  document.getElementById('dashMuscleArea').innerHTML=`
-  <div class="chart-wrap">
-    <div class="chart-title">Séries por grupo muscular — ${new Date().toLocaleString('pt-BR',{month:'long'})}</div>
-    ${rows}
-    <div style="font-size:10px;color:var(--text3);margin-top:8px;">Séries totais completadas no mês</div>
-  </div>`;
+  const rows=sorted.map(([mg,vol])=>`<div class="muscle-bar-row">
+    <div class="muscle-name">${mg}</div>
+    <div class="muscle-bar-bg"><div class="muscle-bar-fill" style="width:${Math.round(vol/maxVol*100)}%"></div></div>
+    <div class="muscle-vol">${vol}</div></div>`).join('');
+  document.getElementById('dashMuscleArea').innerHTML=`<div class="chart-wrap">
+    <div class="chart-title">Séries por grupo muscular — Junho</div>${rows}</div>`;
 }
 
 // ============================================================
 // HISTORY
 // ============================================================
-function renderHistory() {
+function renderHistory(){
   const data=getData();
   const sessions=[...data.sessions].filter(s=>s.finished).sort((a,b)=>b.date.localeCompare(a.date));
-  if(!sessions.length){
-    document.getElementById('histContent').innerHTML=`<div class="hist-empty"><div class="hi">📋</div><p>Nenhum treino registrado ainda.</p></div>`;
-    return;
-  }
-  const byMonth={}; sessions.forEach(s=>{const m=s.date.slice(0,7);if(!byMonth[m])byMonth[m]=[];byMonth[m].push(s);});
+  if(!sessions.length){document.getElementById('histContent').innerHTML=`<div class="hist-empty"><div class="hi">📋</div><p>Nenhum treino registrado ainda.</p></div>`;return;}
+  const byMonth={};sessions.forEach(s=>{const m=s.date.slice(0,7);if(!byMonth[m])byMonth[m]=[];byMonth[m].push(s);});
   const months=['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
   let html='';
   Object.entries(byMonth).sort((a,b)=>b[0].localeCompare(a[0])).forEach(([m,sess])=>{
-    const [yr,mo]=m.split('-');
+    const[yr,mo]=m.split('-');
     html+=`<div class="hist-month-title">${months[parseInt(mo)-1].toUpperCase()} ${yr}</div>`;
     sess.forEach(s=>{
-      const w=WORKOUTS[s.workoutId]; if(!w) return;
-      const icons={push:'💪',pull:'🔙',inf:'🦵',full:'⚡'};
+      const w=WORKOUTS[s.workoutId];if(!w)return;
+      const icons={push:'💪',pull:'🔙',inf:'🦵',upperc:'⚡'};
       const dur=s.endTime&&s.startTime?Math.round((s.endTime-s.startTime)/60000)+'min':'';
       let totalSeries=0;
       Object.values(s.seriesLog).forEach(ex=>Object.values(ex).forEach(sr=>{if(sr.done)totalSeries++;}));
       const dt=s.date.slice(8)+'/'+s.date.slice(5,7);
       html+=`<div class="hist-entry" onclick="showHistDetail('${s.date}','${s.workoutId}')">
         <div class="hist-icon ${s.workoutId}">${icons[s.workoutId]||'💪'}</div>
-        <div class="hist-info">
-          <div class="hist-name">${w.name} <span style="font-size:10px;color:var(--text3);">${s.weekKey||''}</span></div>
-          <div class="hist-meta">${dt} · ${totalSeries} séries${dur?' · '+dur:''}</div>
-        </div>
-        <div style="color:var(--text3);font-size:16px;">›</div>
-      </div>`;
+        <div class="hist-info"><div class="hist-name">${w.name} <span style="font-size:10px;color:var(--text3);">${s.weekKey||''}</span></div>
+          <div class="hist-meta">${dt} · ${totalSeries} séries${dur?' · '+dur:''}</div></div>
+        <div style="color:var(--text3);font-size:16px;">›</div></div>`;
     });
   });
   document.getElementById('histContent').innerHTML=html;
 }
-
-function showHistDetail(date, workoutId) {
+function showHistDetail(date,workoutId){
   const data=getData();
-  const sess=data.sessions.find(s=>s.date===date&&s.workoutId===workoutId);
-  if(!sess) return;
-  const w=WORKOUTS[workoutId];
-  const allExs=w.blocks.flatMap(b=>b.exercises);
+  const sess=data.sessions.find(s=>s.date===date&&s.workoutId===workoutId);if(!sess)return;
+  const w=WORKOUTS[workoutId];const allExs=w.blocks.flatMap(b=>b.exercises);
   let html=`<div class="modal-title">${w.name} — ${date}</div>`;
   allExs.forEach(ex=>{
     const log=sess.seriesLog[ex.id]||{};
-    const numSets=parseInt(ex.sets[sess.weekKey||'S2'])||0;
+    const numSets=countSets(ex.sets[sess.weekKey||'S1']);
     let row='';
-    for(let i=1;i<=numSets;i++){
-      const s=log[`s${i}`];
-      if(s?.done) row+=`<span style="font-size:12px;color:var(--green);margin-right:6px;">S${i}:${s.kg||'—'}kg</span>`;
-    }
-    if(row) html+=`<div class="modal-entry-row"><div style="font-size:13px;font-weight:500;">${ex.name}</div><div>${row}</div></div>`;
+    for(let i=1;i<=numSets;i++){const s=log[`s${i}`];if(s?.done)row+=`<span style="font-size:12px;color:var(--green);margin-right:6px;">S${i}:${s.kg||'PC'}</span>`;}
+    if(row)html+=`<div class="modal-entry-row"><div style="font-size:13px;font-weight:500;">${ex.name}</div><div>${row}</div></div>`;
   });
   html+=`<button class="modal-close" onclick="closeModal('histModal')">Fechar</button>`;
   document.getElementById('histModalContent').innerHTML=html;
@@ -1256,26 +1179,24 @@ function showHistDetail(date, workoutId) {
 // ============================================================
 // WEEK
 // ============================================================
-function setWeek(num) {
+function setWeek(num){
   const map={1:'S1',2:'S2',3:'S3',4:'DL'};
   state.currentWeek=map[num];
   updateData(d=>{if(!d.settings)d.settings={};d.settings.lastWeek=state.currentWeek;});
   updateWeekUI();
-  if(state.currentWorkout) renderWorkout(state.currentWorkout);
+  if(state.currentWorkout)renderWorkout(state.currentWorkout);
   showToast(`Semana ${state.currentWeek} selecionada`);
 }
-function updateWeekUI() {
+function updateWeekUI(){
   const wkNum={S1:1,S2:2,S3:3,DL:4}[state.currentWeek];
-  document.querySelectorAll('.week-btn').forEach(btn=>{
-    btn.classList.toggle('active',parseInt(btn.dataset.w)===wkNum);
-  });
+  document.querySelectorAll('.week-btn').forEach(btn=>{btn.classList.toggle('active',parseInt(btn.dataset.w)===wkNum);});
 }
 
 // ============================================================
 // SESSION TIMER
 // ============================================================
 let sessionTimerInterval=null;
-function startSessionTimer() {
+function startSessionTimer(){
   clearInterval(sessionTimerInterval);
   sessionTimerInterval=setInterval(()=>{
     const el=document.getElementById('sessionTimer');
@@ -1285,74 +1206,33 @@ function startSessionTimer() {
 }
 
 // ============================================================
-// EXPORT / IMPORT
+// EXPORT / IMPORT / SETTINGS / UTILS
 // ============================================================
-function exportData() {
+function exportData(){
   const blob=new Blob([JSON.stringify(getData(),null,2)],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url; a.download=`treino_backup_${todayStr()}.json`; a.click();
-  URL.revokeObjectURL(url);
-  showToast('Backup exportado!');
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
+  a.href=url;a.download=`treino_jun26_${todayStr()}.json`;a.click();URL.revokeObjectURL(url);showToast('Backup exportado!');
 }
-function triggerImport() { document.getElementById('importFile').click(); }
-function importData(evt) {
-  const file=evt.target.files[0]; if(!file) return;
+function triggerImport(){document.getElementById('importFile').click();}
+function importData(evt){
+  const file=evt.target.files[0];if(!file)return;
   const reader=new FileReader();
-  reader.onload=e=>{
-    try{saveStorage(JSON.parse(e.target.result));showToast('Backup importado!');renderHome();renderHistory();}
-    catch(err){showToast('Erro ao importar arquivo');}
-  };
+  reader.onload=e=>{try{saveStorage(JSON.parse(e.target.result));showToast('Backup importado!');renderHome();renderHistory();}catch(err){showToast('Erro ao importar');}};
   reader.readAsText(file);
 }
-
-// ============================================================
-// SETTINGS
-// ============================================================
-function setRestTime(t) {
-  state.restDuration=t;
-  updateData(d=>{if(!d.settings)d.settings={};d.settings.restTime=t;});
-  updateRestSettings(); showToast(`Descanso: ${t}s`);
-}
-function updateRestSettings() {
-  [60,90,120].forEach(t=>{const el=document.getElementById('rest'+t);if(el)el.textContent=state.restDuration===t?'●':'○';});
-}
-function confirmClear() {
-  if(confirm('Limpar TODO o histórico? Esta ação não pode ser desfeita.')) {
-    saveStorage({sessions:[],settings:{restTime:state.restDuration}});
-    renderHome(); renderHistory(); showToast('Histórico limpo');
+function setRestTime(t){state.restDuration=t;updateData(d=>{if(!d.settings)d.settings={};d.settings.restTime=t;});updateRestSettings();showToast(`Descanso: ${t}s`);}
+function updateRestSettings(){[60,90,120].forEach(t=>{const el=document.getElementById('rest'+t);if(el)el.textContent=state.restDuration===t?'●':'○';});}
+function confirmClear(){
+  if(confirm('Limpar TODO o histórico? Ação irreversível.')){
+    saveStorage({sessions:[],settings:{restTime:state.restDuration}});renderHome();renderHistory();showToast('Histórico limpo');
   }
 }
-
-// ============================================================
-// SKIP DAY
-// ============================================================
-function markDaySkipped(reason) {
-  updateData(d=>{
-    const type=SCHEDULE[new Date().getDay()];
-    if(!type){closeModal('skipModal');return;}
-    let sess=d.sessions.find(s=>s.workoutId===type&&s.date===todayStr());
-    if(!sess){sess={workoutId:type,date:todayStr(),weekKey:state.currentWeek,seriesLog:{},finished:false};d.sessions.push(sess);}
-    sess.skipped=true; sess.skipReason=reason;
-  });
-  closeModal('skipModal'); showToast('Dia registrado'); renderHome();
-}
-
-// ============================================================
-// UTILS
-// ============================================================
 function closeModal(id){document.getElementById(id).classList.remove('active');}
 function todayStr(){return dateStr(new Date());}
 function dateStr(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function getWeekStart(){const d=new Date();d.setDate(d.getDate()-d.getDay());return dateStr(d);}
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2500);
-}
-document.querySelectorAll('.modal-bg').forEach(bg=>{
-  bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('active');});
-});
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+document.querySelectorAll('.modal-bg').forEach(bg=>{bg.addEventListener('click',e=>{if(e.target===bg)bg.classList.remove('active');});});
 </script>
 </body>
 </html>
